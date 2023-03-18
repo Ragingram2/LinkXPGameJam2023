@@ -153,7 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_speed: 50
-  animationController: {fileID: 0}
+  animationController: {fileID: 8795769862577526301}
+  m_towerPrefab: {fileID: 0}
 --- !u!1 &7556023036210734234
 GameObject:
   m_ObjectHideFlags: 0
@@ -369,3 +370,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 9075997014699864907}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8795769862577526301 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 568774221983245654, guid: 307c74350aa4c0f43a0bcf440c5ee2e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 9075997014699864907}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e325f567076b5b84ebbb90cd398583da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
