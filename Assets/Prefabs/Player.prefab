@@ -11,8 +11,10 @@ GameObject:
   - component: {fileID: 556415678418857268}
   - component: {fileID: 7943547277438967553}
   - component: {fileID: 705015649292182575}
+  - component: {fileID: 466182411905819196}
   - component: {fileID: 8767061752355040061}
-  m_Layer: 0
+  - component: {fileID: 1514135176920352922}
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -34,7 +36,7 @@ Transform:
   - {fileID: 5896643565576368321}
   - {fileID: 5319830777805383643}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &7943547277438967553
 BoxCollider:
@@ -64,14 +66,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7251601979006515533}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: f6687c92469e2b946bf69039fe11bbd3,
     type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 3
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -140,6 +142,19 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 753950418259599343}
+--- !u!114 &466182411905819196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7251601979006515533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e87a0f983a6b9943abbffb80fc9aca5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_input: {fileID: 0}
 --- !u!114 &8767061752355040061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,10 +167,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4baf9ed1844d1d49b34a2b7165c05da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 20
+  m_speed: 2
   animationController: {fileID: 8795769862577526301}
   m_towerPrefab: {fileID: 4226136409204672637, guid: 58644ac0b184cbf47b11f8f832866564,
     type: 3}
+--- !u!54 &1514135176920352922
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7251601979006515533}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
 --- !u!1 &7556023036210734234
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,14 +224,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7556023036210734234}
-  m_LocalRotation: {x: 0.36347887, y: -0, z: -0, w: 0.9316025}
-  m_LocalPosition: {x: 0, y: 1.264333, z: -1.174}
+  m_LocalRotation: {x: 0.17364816, y: 0, z: 0, w: 0.9848078}
+  m_LocalPosition: {x: 0, y: 4.5, z: -10.589}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 556415678418857268}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 42.628, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
 --- !u!20 &753950418259599343
 Camera:
   m_ObjectHideFlags: 0
@@ -221,11 +263,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.01
+  near clip plane: 0
   far clip plane: 1000
   field of view: 60
-  orthographic: 0
-  orthographic size: 10
+  orthographic: 1
+  orthographic size: 2.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -272,7 +314,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0

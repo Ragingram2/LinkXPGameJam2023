@@ -34,6 +34,9 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
+        capsuleCollider = GetComponent<CapsuleCollider>();
+
         enemyName = enemyData.name;
         enemyDescription = enemyData.description;
 
