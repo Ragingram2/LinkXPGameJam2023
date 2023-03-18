@@ -246,14 +246,10 @@ MonoBehaviour:
   enemyName: 
   enemyDescription: 
   radiusMultiply: 5
-  target: {fileID: 431455372}
   agent: {fileID: 28169051}
   capsuleCollider: {fileID: 0}
   targetBoxCollider: {fileID: 0}
   enemySphereCollider: {fileID: 0}
-  m_targetMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!195 &28169051
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -768,14 +764,10 @@ MonoBehaviour:
   enemyName: 
   enemyDescription: 
   radiusMultiply: 5
-  target: {fileID: 431455372}
   agent: {fileID: 892548434}
   capsuleCollider: {fileID: 0}
   targetBoxCollider: {fileID: 0}
   enemySphereCollider: {fileID: 0}
-  m_targetMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!195 &892548434
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -921,14 +913,10 @@ MonoBehaviour:
   enemyName: 
   enemyDescription: 
   radiusMultiply: 5
-  target: {fileID: 431455372}
   agent: {fileID: 914267061}
   capsuleCollider: {fileID: 0}
   targetBoxCollider: {fileID: 0}
   enemySphereCollider: {fileID: 0}
-  m_targetMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!195 &914267061
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1412,7 +1400,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1393819996}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.43, y: 0.78, z: -7.75}
+  m_LocalPosition: {x: -7.43, y: 0.78, z: -1.57}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1542,14 +1530,10 @@ MonoBehaviour:
   enemyName: 
   enemyDescription: 
   radiusMultiply: 5
-  target: {fileID: 431455372}
   agent: {fileID: 1465008404}
   capsuleCollider: {fileID: 0}
   targetBoxCollider: {fileID: 0}
   enemySphereCollider: {fileID: 0}
-  m_targetMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!195 &1465008404
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1760,14 +1744,10 @@ MonoBehaviour:
   enemyName: 
   enemyDescription: 
   radiusMultiply: 10
-  target: {fileID: 431455372}
   agent: {fileID: 2000164799}
   capsuleCollider: {fileID: 0}
   targetBoxCollider: {fileID: 0}
   enemySphereCollider: {fileID: 0}
-  m_targetMask:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!195 &2000164799
 NavMeshAgent:
   m_ObjectHideFlags: 0

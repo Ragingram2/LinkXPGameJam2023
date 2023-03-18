@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
     int enemyRadiusMultiply;
 
     //public Rigidbody body;
-    public Transform target;
+    GameObject target;
     Transform finalTarget;
     public NavMeshAgent agent;
     public CapsuleCollider capsuleCollider;
@@ -39,12 +39,14 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        target = GameObject.Find("TestTarget");
+        finalTarget = target.transform;
+
         agent = GetComponent<NavMeshAgent>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         enemySphereCollider = GetComponent<SphereCollider>();
 
-        targetBoxCollider = target.GetComponent<BoxCollider>();
-
+        targetBoxCollider = finalTarget.GetComponent<BoxCollider>();
 
         enemyName = enemyData.name;
         enemyDescription = enemyData.description;
@@ -58,10 +60,6 @@ public class Enemy : MonoBehaviour
         enemyDamageDeal = enemyData.damageDeal;
 
         enemyAttackTime = enemyData.attackTime;
-
-        enemyRadiusMultiply = enemyData.radiusMultiply;
-
-        finalTarget = target;
 
         DebugLog();
     }
@@ -88,7 +86,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    
+    private void OnCollisionStay(Collision collision)
+    {
+        Tower temp;
+        if (collision.gameObject.TryGetComponent<Tower>(out temp))
+        {
+            //call tower take damage
+        }
+    }
+
 
     void OnTriggerEnter(Collider collider)
     {
@@ -108,20 +114,19 @@ public class Enemy : MonoBehaviour
             Debug.Log($"Enemy type {enemyName} speed is: " + agent.speed);
             Debug.Log($"Collider name: {collider.name}");
         }
-    }
-
-    // Dictionary that makes lists based on priority numbers
-  
+    }  
 
     void DebugLog()
     {
         Debug.Log( $"Enemy type {enemyName}: " + enemyDamageDeal);
     }
 
+
+    //If attacked by tower, it targets it, and when it gets within range, it attacks
     public void SwitchEnemyTarget(Transform pTarget)
     {
         Debug.Log($"Should've switched target to {pTarget.name}");
-        target = pTarget;
+        finalTarget = pTarget;
         agent.speed = enemySpeed;
 
 
@@ -130,13 +135,18 @@ public class Enemy : MonoBehaviour
         //Needs sphere collider for triggers
     }
 
+    public void EnemyTakesDamage(int _damageAmmount)
+    {
+        enemyCurrentHealth -= _damageAmmount;
+    }
+
 
     protected virtual void EnemyMove()
     {
         if (target != null)
         {
 
-            var pos = target.position;
+            var pos = finalTarget.position;
             pos.y = 0;
             agent.SetDestination(pos);
         }
@@ -151,4 +161,7 @@ public class Enemy : MonoBehaviour
 }
 
 
-//If the enemy is colliding(it's box collision) with anything that's a tower, it deals damage
+//1. If the enemy is colliding(it's box collision) with anything that's a tower, it deals damage
+//2. Enemy attack - time between attacks, type of attack etc.
+//3. Switch enemy target - if attacked, change target to it, if there's no target, change it back to farm
+//4. Enemy move is using navmesh - setdestinantion
