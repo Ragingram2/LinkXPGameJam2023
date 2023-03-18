@@ -34,7 +34,7 @@ Transform:
   - {fileID: 5896643565576368321}
   - {fileID: 5319830777805383643}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &7943547277438967553
 BoxCollider:
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4baf9ed1844d1d49b34a2b7165c05da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 50
+  m_speed: 20
   animationController: {fileID: 8795769862577526301}
   m_towerPrefab: {fileID: 4226136409204672637, guid: 58644ac0b184cbf47b11f8f832866564,
     type: 3}
