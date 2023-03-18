@@ -415,6 +415,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8767061752355040061, guid: 74c59612ddee7cb43bc4e7733c974a17,
+        type: 3}
+      propertyPath: m_towerPrefab
+      value: 
+      objectReference: {fileID: 4226136409204672637, guid: 58644ac0b184cbf47b11f8f832866564,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
