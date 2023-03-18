@@ -16,7 +16,6 @@ MonoBehaviour:
   description: Should be a 4
   model: {fileID: 0}
   health: 100
-  speed: 5
+  speed: 1
   damageDeal: 6969
   attackTime: 0
-  canFly: 0
