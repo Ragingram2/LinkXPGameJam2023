@@ -14,7 +14,7 @@ float3 SampleSceneColor_SVF(float2 uv) {
 #endif
 
 #ifndef UNITY_DECLARE_DEPTH_TEXTURE_INCLUDED
-TEXTURE2D_X_FLOAT(_CameraDepthTexture);
+TEXTURE2D_FLOAT(_CameraDepthTexture);
 SAMPLER(sampler_CameraDepthTexture);
 float SampleSceneDepth_SVF(float2 uv)
 {
@@ -55,7 +55,7 @@ int GetAdditionalLightsCount_SVF() {
     return int(min(_AdditionalLightsCount.x, unity_LightData.y));
 }
 
-float3 CalcAdditionalLight_SVF(uint lightIndex, float3 worldPos) {
+half3 CalcAdditionalLight_SVF(uint lightIndex, float3 worldPos) {
 #if USE_FORWARD_PLUS
     int perObjectLightIndex = lightIndex;
 #else
@@ -95,13 +95,13 @@ float3 CalcAdditionalLight_SVF(uint lightIndex, float3 worldPos) {
 
 #endif
 
-float3 LightingAtWorldPos_SVF(float3 fogColor, float3 worldPos) {
+half3 LightingAtWorldPos_SVF(half3 baseColor, float3 worldPos) {
 #if defined(SHADERGRAPH_PREVIEW)
-	return fogColor;
+	return baseColor;
 #else
 	const half4 shadowMask = half4(1.0, 1.0, 1.0, 1.0);
 
-	float3 color = fogColor * MainLightShadow_SVF(TransformWorldToShadowCoord(worldPos), worldPos, shadowMask, _MainLightOcclusionProbes) * _MainLightColor.rgb;
+	half3 color = baseColor * MainLightShadow_SVF(TransformWorldToShadowCoord(worldPos), worldPos, shadowMask, _MainLightOcclusionProbes) * _MainLightColor.rgb;
 
     uint lightCount = GetAdditionalLightsCount();
 
@@ -110,7 +110,7 @@ float3 LightingAtWorldPos_SVF(float3 fogColor, float3 worldPos) {
     {
         FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK
 
-        color += fogColor * CalcAdditionalLight_SVF(lightIndex, worldPos);
+        color += baseColor * CalcAdditionalLight_SVF(lightIndex, worldPos);
     }
 
 	{
@@ -130,7 +130,7 @@ float3 LightingAtWorldPos_SVF(float3 fogColor, float3 worldPos) {
 
 #endif
 
-        color += fogColor * CalcAdditionalLight_SVF(lightIndex, worldPos);
+        color += baseColor * CalcAdditionalLight_SVF(lightIndex, worldPos);
 	
 #if USE_FORWARD_PLUS
 		}
@@ -141,54 +141,50 @@ float3 LightingAtWorldPos_SVF(float3 fogColor, float3 worldPos) {
 #endif
 }
 
-void SampleVolumetricFog_float(float2 uv, float steps, float maxStepDepth, float fogDensity, float3 fogColor, float maxFogHeight, out float3 output) {
-	output = SampleSceneColor_SVF(uv);
-
-	[branch] if (steps == 0.0)
-		return;
+void SampleVolumetricFog_half(float2 uv, float fogDensity, half3 fogColor, out half4 output) {
+	output = half4(0.0, 0.0, 0.0, 0.0);//SampleSceneColor_SVF(uv);
 	
 	float depth = SampleSceneDepth_SVF(uv);
 
 	float3 sampleWorldPos = ComputeWorldSpacePosition(uv, depth, UNITY_MATRIX_I_VP);
 
+	const half depthOffset = 4.5;
+
 	float3 cameraRayDir = normalize(sampleWorldPos - _WorldSpaceCameraPos);
-	float3 cameraRayStart = ComputeWorldSpacePosition(uv, 1.0, UNITY_MATRIX_I_VP);
+	float3 cameraRayStart = ComputeWorldSpacePosition(uv, 1.0, UNITY_MATRIX_I_VP) + cameraRayDir * depthOffset;
 
-	float sceneDepth;
+
+	half sceneDepth;
 	if (unity_OrthoParams.w == 1.0)
-		sceneDepth = LinearEyeDepth(sampleWorldPos, UNITY_MATRIX_V);
+		sceneDepth = LinearEyeDepth(sampleWorldPos, UNITY_MATRIX_V) - depthOffset;
 	else
-		sceneDepth = LinearEyeDepth(depth, _ZBufferParams);
+		sceneDepth = LinearEyeDepth(depth, _ZBufferParams) - depthOffset;
 
-	if (cameraRayDir.y != 0.0) {
-		if (cameraRayStart.y > maxFogHeight) {
-			float dist = (cameraRayStart.y - maxFogHeight) / cameraRayDir.y;
-			cameraRayStart -= cameraRayDir * dist;
-			sceneDepth = length(cameraRayStart - sampleWorldPos);
-		}
+	sceneDepth = min(sceneDepth, 35.0);
 
-		if (sampleWorldPos.y > maxFogHeight) {
-			float dist = (sampleWorldPos.y - maxFogHeight) / cameraRayDir.y;
-			sampleWorldPos -= cameraRayDir * dist;
-			sceneDepth = length(cameraRayStart - sampleWorldPos);
-		}
-	}
-	sceneDepth = min(sceneDepth, maxStepDepth);
+	const uint steps = 64;
 
-	float actualSteps = steps + 1;
+	float stepSize = sceneDepth / steps;
+	half stepAlpha = saturate(fogDensity * stepSize);
 
-	float stepSize = sceneDepth / actualSteps;
-	float stepAlpha = saturate(fogDensity * stepSize);
-
-	for (float i = 1.0; i < actualSteps; i++) {
+	for (uint i = 1; i < steps; i++) {
 		float3 worldPos = cameraRayStart + (cameraRayDir * (sceneDepth - stepSize * i));
 		
-		if(worldPos.y > maxFogHeight) {
-			continue;
-		}
-
-		output = (1.0 - stepAlpha) * output + stepAlpha * LightingAtWorldPos_SVF(fogColor, worldPos);
+		output = (1.0 - stepAlpha) * output + stepAlpha * half4(LightingAtWorldPos_SVF(fogColor, worldPos), 1.0);
 	}
+}
+
+half GetScreenSpaceAmbientOcclusion_SVF(float2 normalizedScreenSpaceUV){
+    #if defined(_SCREEN_SPACE_OCCLUSION) && !defined(_SURFACE_TYPE_TRANSPARENT)
+    return SampleAmbientOcclusion(normalizedScreenSpaceUV);
+	#else
+    return 1.0;
+    #endif
+}
+
+void LightSprite_half(half4 color, float3 worldPos, out half3 outputColor, out float alpha) {
+	outputColor = LightingAtWorldPos_SVF(color.rgb, worldPos) + color.rgb * GetScreenSpaceAmbientOcclusion_SVF(GetNormalizedScreenSpaceUV(TransformWorldToHClip(worldPos)));
+	alpha = color.a;
 }
 
 #endif // SAMPLE_VOLUMETRIC_FOG
