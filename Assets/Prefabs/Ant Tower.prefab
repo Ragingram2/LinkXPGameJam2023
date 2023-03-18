@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &603649054895808947
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2147683590413805959}
+  m_Layer: 2
+  m_Name: Tip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2147683590413805959
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603649054895808947}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5723638370210692878}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1727809995173038915
 GameObject:
   m_ObjectHideFlags: 0
@@ -12,7 +43,7 @@ GameObject:
   - component: {fileID: 241698782316973688}
   - component: {fileID: 3630302841870739518}
   - component: {fileID: 160284415531923938}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,10 +58,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1727809995173038915}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.49, y: 2.69, z: 6.874}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 2}
+  m_LocalPosition: {x: 1.49, y: 2.69, z: 6.76}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.9821}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2147683590413805959}
   m_Father: {fileID: 7132481151124124831}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -115,11 +147,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4006675608560239174}
   - component: {fileID: 4609309690506062928}
-  - component: {fileID: 868440603716912358}
   - component: {fileID: 2543578172828563649}
   - component: {fileID: 8626063471329328225}
-  m_Layer: 0
-  m_Name: Tower
+  m_Layer: 2
+  m_Name: Ant Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,18 +195,6 @@ CapsuleCollider:
   m_Height: 0.5423914
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0.17119575, z: -0.00000008940697}
---- !u!114 &868440603716912358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4226136409204672637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 013e02b1678f7674b98e5946c9caf143, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!135 &2543578172828563649
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -209,11 +228,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176b4926cd414a14ead89cf9e9e463ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_data: {fileID: 0}
+  m_data: {fileID: 11400000, guid: f3c36d9756f99414b9b27684d6d6a2ff, type: 2}
   m_targetMask:
     serializedVersion: 2
     m_Bits: 128
-  m_bullet: {fileID: 0}
+  m_bullet: {fileID: 5895735362341990548, guid: 29943438627ab3f4183af5f99e06bcd5,
+    type: 3}
+  m_gunTip: {fileID: 2147683590413805959}
   m_targets: []
 --- !u!1 &6806223489974594857
 GameObject:
@@ -226,7 +247,7 @@ GameObject:
   - component: {fileID: 7132481151124124831}
   - component: {fileID: 5051291534739207355}
   - component: {fileID: 2083701458002414042}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
