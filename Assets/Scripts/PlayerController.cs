@@ -9,12 +9,9 @@ public class PlayerController : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] private float m_speed = 10;
 
+    public EntityAnimationController animationController;
+
     private Vector2 m_movement;
-
-    void Start()
-    {
-
-    }
 
     void FixedUpdate()
     {
@@ -24,5 +21,6 @@ public class PlayerController : MonoBehaviour
     void OnMove(InputValue val)
     {
         m_movement = val.Get<Vector2>().normalized;
+        animationController.SetVelocity(m_movement);
     }
 }
