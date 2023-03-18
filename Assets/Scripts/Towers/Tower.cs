@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-    [SerializeField] private TowerData m_data;
-    [SerializeField] private LayerMask m_targetMask;
-    [SerializeField] private GameObject m_bullet;
-    [SerializeField] private Transform m_gunTip;
+    [SerializeField] protected TowerData m_data;
+    [SerializeField] protected LayerMask m_targetMask;
+    [SerializeField] protected GameObject m_bullet;
+    [SerializeField] protected Transform m_gunTip;
 
     [HideInInspector] public List<GameObject> m_targets = new List<GameObject>();
-    private GameObject m_curretTarget;
-    private bool m_canAttack = true;
+    protected GameObject m_curretTarget;
+    protected bool m_canAttack = true;
 
     void Update()
     {
@@ -39,27 +39,7 @@ public class Tower : MonoBehaviour
 
     public virtual void TowerAttack()
     {
-        var vel = m_curretTarget.GetComponent<Rigidbody>().velocity;
-        var pos = m_curretTarget.transform.position + vel;
-        transform.LookAt(m_curretTarget.transform);
-
-        RaycastHit hit;
-        if (Physics.Raycast(m_gunTip.position, transform.forward, out hit, Mathf.Infinity, m_targetMask))
-        {
-            var name = LayerMask.LayerToName(hit.transform.gameObject.layer);
-            if (!name.Equals("Target"))
-            {
-                return;
-            }
-        }
-
-        if (m_canAttack)
-        {
-            var go = Instantiate(m_bullet, m_gunTip.position, Quaternion.identity);
-            go.transform.LookAt(hit.transform);
-            go.GetComponent<Rigidbody>().AddForce(transform.forward * 5f, ForceMode.Impulse);
-            StartCoroutine(ShotCooldown(m_data.m_fireRate));
-        }
+        Debug.Log("Tower Attacking");
     }
 
     public virtual void TowerTarget()
@@ -68,12 +48,12 @@ public class Tower : MonoBehaviour
         m_curretTarget = obj.go;
     }
 
-    public void TakeDamage()
+    public void TakeDamage(int num)
     {
-
+        Debug.Log("Tower Takig Damage");
     }
 
-    (Vector3 pos, GameObject go) GetClosestEnemyPos()
+    protected (Vector3 pos, GameObject go) GetClosestEnemyPos()
     {
         float maxDistance = Mathf.Infinity;
         GameObject closest = null;
@@ -94,7 +74,7 @@ public class Tower : MonoBehaviour
         return closest != null ? (closestPos, closest) : (transform.position + transform.forward, null);
     }
 
-    IEnumerator ShotCooldown(float seconds)
+    protected IEnumerator ShotCooldown(float seconds)
     {
         m_canAttack = false;
         yield return new WaitForSeconds(seconds);
