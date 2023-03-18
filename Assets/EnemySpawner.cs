@@ -12,13 +12,25 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float m_spawnRadius = 10;
     private List<Vector3> m_spawnPositions = new List<Vector3>();
 
+    private bool m_waveRuning = false;
+    private int m_enemyCount = 0;
+
     private void Start()
     {
         InitNextWave();
     }
 
+    private void Update()
+    {
+        if(m_waveRuning)
+        {
+            UpdateWave();
+        }
+    }
+
     void InitNextWave()
     {
+        m_spawnPositions.Clear();
         var num = Random.Range(m_spawnLocAmountRange.x, m_spawnLocAmountRange.y);
         for (int i = 0; i < num; i++)
         {
@@ -29,12 +41,13 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    void OnStartWave(InputValue val) => StartWave();
-    void StartWave()
+    void OnStartWave(InputAction val)
     {
-        Debug.Log("Starting Wave");
-    }
+        if(val.IsPressed())
+        {
 
+        }
+    }
     void UpdateWave()
     {
 
@@ -42,7 +55,7 @@ public class EnemySpawner : MonoBehaviour
 
     void EndWave()
     {
-
+        m_waveRuning = false;
     }
 
     private void OnDrawGizmos()

@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.Experimental.GraphView.GraphView;
+using UnityEngine.UI;
 
 public class TargetEnemy : MonoBehaviour
 {
+    [SerializeField] private LayerMask m_targetMask;
     private List<GameObject> m_targets = new List<GameObject>();
     void Start()
     {
@@ -18,7 +21,7 @@ public class TargetEnemy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name.Equals("Enemy"))
+        if ((m_targetMask & (1 << other.gameObject.layer)) != 0)
         {
             m_targets.Add(other.gameObject);
         }

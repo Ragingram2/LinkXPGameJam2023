@@ -42,7 +42,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Fog_density: 0.015
+    - _Fog_density: 0.07
     - _Max_fog_height: 3
     - _Max_step_depth: 20
     - _QueueControl: 1
