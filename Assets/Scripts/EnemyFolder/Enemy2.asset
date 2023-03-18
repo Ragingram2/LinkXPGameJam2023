@@ -19,3 +19,4 @@ MonoBehaviour:
   speed: 1
   damageDeal: 2
   attackTime: 0
+  radiusMultiply: 2

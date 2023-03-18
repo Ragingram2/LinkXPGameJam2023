@@ -21,6 +21,8 @@ public class Enemy : MonoBehaviour
 
     float enemyAttackTime;
 
+    int enemyRadiusMultiply;
+
     //public Rigidbody body;
     public Transform target;
     public NavMeshAgent agent;
@@ -44,7 +46,7 @@ public class Enemy : MonoBehaviour
 
         enemyAttackTime = enemyData.attackTime;
 
-
+        enemyRadiusMultiply = enemyData.radiusMultiply;
 
         DebugLog();
     }
@@ -57,7 +59,7 @@ public class Enemy : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-       // agent.SetDestination(transform.position);
+        //agent.SetDestination(transform.position);
         Debug.Log($"Enemy type {enemyName} is going here: " + transform.position);
     }
 
@@ -76,11 +78,11 @@ public class Enemy : MonoBehaviour
             agent.SetDestination(pos);
         }
 
-        if (agent.remainingDistance < capsuleCollider.radius * radiusMultiply)
+        if (agent.remainingDistance < capsuleCollider.radius * enemyRadiusMultiply)
         {
             agent.speed = 0f;
         }
-
+        //^This will be replaced by farm house and the farm house radius
     }
 
 

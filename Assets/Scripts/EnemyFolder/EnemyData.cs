@@ -14,6 +14,7 @@ public class EnemyData : ScriptableObject
     public float speed;
     public int damageDeal;
     public float attackTime;
+    public int radiusMultiply;
 }
 
 //Make radius multiply here instead of Enemy.cs
