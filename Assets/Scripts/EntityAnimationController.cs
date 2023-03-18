@@ -3,6 +3,13 @@ using UnityEngine;
 public class EntityAnimationController : MonoBehaviour
 {
     public Animator animator;
+    public SpriteRenderer spriteRenderer;
+    public MeshRenderer meshRenderer;
+
+    private void Start()
+    {
+        spriteRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.TwoSided;
+    }
 
     public void SetVelocity(Vector2 velocity)
     {
@@ -17,5 +24,9 @@ public class EntityAnimationController : MonoBehaviour
 
         animator.SetBool("vertical", vertical);
         animator.SetFloat("speed", Mathf.Sqrt(sqrMag) * (vertical ? Mathf.Sign(velocity.y) : Mathf.Sign(velocity.x)));
+    }
+
+    public void Update()
+    {
     }
 }

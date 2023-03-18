@@ -27,11 +27,28 @@ float SampleSceneDepth_SVF(float2 uv)
 }
 #endif
 
+half GetScreenSpaceAmbientOcclusion_SVF(float2 normalizedScreenSpaceUV){
+    #if defined(_SCREEN_SPACE_OCCLUSION) && !defined(_SURFACE_TYPE_TRANSPARENT)
+    return SampleAmbientOcclusion(normalizedScreenSpaceUV);
+	#else
+    return 1.0;
+    #endif
+}
+
 #if !defined(SHADERGRAPH_PREVIEW)
+half3 SubtractDirectMainLightFromLightmap_SVF(half shadowAttenuation, half3 bakedGI) {
+    half3 estimatedLightContributionMaskedByInverseOfShadow = _MainLightColor.rgb * (1.0 - shadowAttenuation);
+	half3 subtractedLightmap = bakedGI - estimatedLightContributionMaskedByInverseOfShadow;
+
+	half3 realtimeShadow = max(subtractedLightmap, _SubtractiveShadowColor.xyz);
+    realtimeShadow = lerp(bakedGI, realtimeShadow, _MainLightShadowParams.x);
+	
+    return min(bakedGI, realtimeShadow);
+}
+
 half MainLightRealtimeShadow_SVF(float4 shadowCoord) {
 	ShadowSamplingData shadowSamplingData = GetMainLightShadowSamplingData();
-	half4 shadowParams = GetMainLightShadowParams();
-	return SampleShadowmap(TEXTURE2D_ARGS(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture), shadowCoord, shadowSamplingData, shadowParams, false);
+	return SampleShadowmap(TEXTURE2D_ARGS(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture), shadowCoord, shadowSamplingData, _MainLightShadowParams, false);
 }
 
 half MainLightShadow_SVF(float4 shadowCoord, float3 positionWS, half4 shadowMask, half4 occlusionProbeChannels) {
@@ -55,7 +72,7 @@ int GetAdditionalLightsCount_SVF() {
     return int(min(_AdditionalLightsCount.x, unity_LightData.y));
 }
 
-half4 CalcAdditionalLight_SVF(uint lightIndex, float3 worldPos) {
+half4 CalcAdditionalLight_SVF(uint lightIndex, float3 worldPos, float bias) {
 #if USE_FORWARD_PLUS
     int perObjectLightIndex = lightIndex;
 #else
@@ -83,7 +100,7 @@ half4 CalcAdditionalLight_SVF(uint lightIndex, float3 worldPos) {
 
     float attenuation = DistanceAttenuation(distanceSqr, distanceAndSpotAttenuation.xy) * AngleAttenuation(spotDirection.xyz, lightDirection, distanceAndSpotAttenuation.zw);
 
-	attenuation *= AdditionalLightShadow(perObjectLightIndex, worldPos, lightDirection, half4(1.0, 1.0, 1.0, 1.0), occlusionProbeChannels);
+	attenuation *= AdditionalLightShadow(perObjectLightIndex, worldPos + lightDirection * bias, lightDirection, half4(1.0, 1.0, 1.0, 1.0), occlusionProbeChannels);
 
 #if defined(_LIGHT_COOKIES)
     real3 cookieColor = SampleAdditionalLightCookie(perObjectLightIndex, worldPos);
@@ -95,14 +112,21 @@ half4 CalcAdditionalLight_SVF(uint lightIndex, float3 worldPos) {
 
 #endif
 
-half4 LightingAtWorldPos_SVF(half3 baseColor, float3 worldPos) {
+half4 LightingAtWorldPos_SVF(half3 baseColor, float3 worldPos, float bias) {
 #if defined(SHADERGRAPH_PREVIEW)
-	return baseColor;
+	return half4(baseColor, 1.0);
 #else
 	const half4 shadowMask = half4(1.0, 1.0, 1.0, 1.0);
 
-	half attenuation = MainLightShadow_SVF(TransformWorldToShadowCoord(worldPos), worldPos, shadowMask, _MainLightOcclusionProbes);
-	half3 color = baseColor * attenuation * _MainLightColor.rgb;
+	float2 normalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(TransformWorldToHClip(worldPos));
+
+	float3 biasedWorldPos = worldPos + _MainLightPosition.xyz * bias;
+	half attenuation = MainLightShadow_SVF(TransformWorldToShadowCoord(biasedWorldPos), biasedWorldPos, shadowMask, _MainLightOcclusionProbes);
+	half directAmbientOcclusion = lerp(half(1.0), GetScreenSpaceAmbientOcclusion_SVF(normalizedScreenSpaceUV), _AmbientOcclusionParam.w);
+
+	half3 color = baseColor * SubtractDirectMainLightFromLightmap_SVF(attenuation, half3(1.0, 1.0, 1.0));
+
+	color += baseColor * attenuation * (_MainLightColor.rgb * directAmbientOcclusion);
 
     uint lightCount = GetAdditionalLightsCount();
 
@@ -111,14 +135,14 @@ half4 LightingAtWorldPos_SVF(half3 baseColor, float3 worldPos) {
     {
         FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK
 
-		half4 light = CalcAdditionalLight_SVF(lightIndex, worldPos);
+		half4 light = CalcAdditionalLight_SVF(lightIndex, worldPos, bias);
         color += baseColor * light.rgb * light.a;
 		attenuation += light.a;
     }
 
 	{
 		uint lightIndex;
-		ClusterIterator _urp_internal_clusterIterator = ClusterInit(GetNormalizedScreenSpaceUV(TransformWorldToHClip(worldPos)), worldPos, 0);
+		ClusterIterator _urp_internal_clusterIterator = ClusterInit(normalizedScreenSpaceUV, worldPos, 0);
 		[loop] while (ClusterNext(_urp_internal_clusterIterator, lightIndex)) {
 			lightIndex += URP_FP_DIRECTIONAL_LIGHTS_COUNT;
 			FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK
@@ -133,7 +157,7 @@ half4 LightingAtWorldPos_SVF(half3 baseColor, float3 worldPos) {
 
 #endif
 
-		half4 light = CalcAdditionalLight_SVF(lightIndex, worldPos);
+		half4 light = CalcAdditionalLight_SVF(lightIndex, worldPos, bias);
         color += baseColor * light.rgb * light.a;
 		attenuation += light.a;
 
@@ -167,7 +191,7 @@ void SampleVolumetricFog_half(float2 uv, float fogDensity, half3 fogColor, out h
 
 	sceneDepth = min(sceneDepth, 10.0);
 
-	const uint steps = 64;
+	const uint steps = 128;
 
 	float stepSize = sceneDepth / steps;
 	half stepAlpha = saturate(fogDensity * stepSize);
@@ -182,7 +206,7 @@ void SampleVolumetricFog_half(float2 uv, float fogDensity, half3 fogColor, out h
 			lighting = half4(0.5, 0.5, 0.5, 0.5);
 		} else {
 			float3 worldPos = cameraRayStart + (cameraRayDir * stepDepth);
-			lighting = LightingAtWorldPos_SVF(fogColor, worldPos);
+			lighting = LightingAtWorldPos_SVF(fogColor, worldPos, 0.0);
 		}
 		
 		attenuation = (1.0 - stepAlpha) * attenuation + stepAlpha * lighting.a;
@@ -193,18 +217,18 @@ void SampleVolumetricFog_half(float2 uv, float fogDensity, half3 fogColor, out h
 	output.rgb = output.rgb * attenuation * attenuation * attenuation;
 }
 
-half GetScreenSpaceAmbientOcclusion_SVF(float2 normalizedScreenSpaceUV){
-    #if defined(_SCREEN_SPACE_OCCLUSION) && !defined(_SURFACE_TYPE_TRANSPARENT)
-    return SampleAmbientOcclusion(normalizedScreenSpaceUV);
-	#else
-    return 1.0;
-    #endif
-}
-
 void LightSprite_half(half4 color, float3 worldPos, out half3 outputColor, out float alpha) {
-	half4 lighting = LightingAtWorldPos_SVF(color.rgb, worldPos);
+	// color = color * 0.70710678118654752440084436210485;
 
-	outputColor = lighting.rgb + color.rgb * GetScreenSpaceAmbientOcclusion_SVF(GetNormalizedScreenSpaceUV(TransformWorldToHClip(worldPos)));
+	half4 lighting = LightingAtWorldPos_SVF(color.rgb, worldPos, 0.03);
+
+	outputColor = lighting.rgb
+#if defined(SHADERGRAPH_PREVIEW)
+	;
+#else
+	+ color.rgb * GetScreenSpaceAmbientOcclusion_SVF(GetNormalizedScreenSpaceUV(TransformWorldToHClip(worldPos)));
+#endif
+
 	alpha = color.a;
 }
 
