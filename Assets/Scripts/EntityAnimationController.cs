@@ -3,6 +3,12 @@ using UnityEngine;
 public class EntityAnimationController : MonoBehaviour
 {
     public Animator animator;
+    public SpriteRenderer spriteRenderer;
+
+    private void Start()
+    {
+        spriteRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.TwoSided;
+    }
 
     public void SetVelocity(Vector2 velocity)
     {
