@@ -16,6 +16,6 @@ MonoBehaviour:
   description: Does something
   model: {fileID: 0}
   health: 100
-  speed: 5
+  speed: 1
   damageDeal: 1
-  canFly: 0
+  attackTime: 0

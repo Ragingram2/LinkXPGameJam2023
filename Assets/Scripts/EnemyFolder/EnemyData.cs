@@ -11,11 +11,9 @@ public class EnemyData : ScriptableObject
     public Sprite model;
 
     public int health;
-    public int speed;
+    public float speed;
     public int damageDeal;
     public float attackTime;
-
-    public bool canFly;
-
-
 }
+
+//Make radius multiply here instead of Enemy.cs

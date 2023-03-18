@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
@@ -13,17 +14,18 @@ public class Enemy : MonoBehaviour
     int enemyCurrentHealth;
     int enemyMaxHealth;
 
-    int enemySpeed;
+    float enemySpeed;
+    public float radiusMultiply;
 
     int enemyDamageDeal;
 
     float enemyAttackTime;
 
-    bool enemyCanFly;
-
-    public Rigidbody body;
-
+    //public Rigidbody body;
     public Transform target;
+    public NavMeshAgent agent;
+    public CapsuleCollider capsuleCollider;
+    
 
     //Enemy target
     //GameObject target;
@@ -42,28 +44,45 @@ public class Enemy : MonoBehaviour
 
         enemyAttackTime = enemyData.attackTime;
 
-        enemyCanFly = enemyData.canFly;
+
 
         DebugLog();
     }
 
     void Update()
     {
-        if (target != null)
-        {
-            transform.LookAt(target.position);
-            transform.Translate(Vector3.forward * enemySpeed * Time.deltaTime);
-        }
+        EnemyMove();
     }
+
+
     void OnTriggerEnter(Collider other)
     {
-        target = null;
+       // agent.SetDestination(transform.position);
+        Debug.Log($"Enemy type {enemyName} is going here: " + transform.position);
     }
 
     void DebugLog()
     {
         Debug.Log( $"Enemy type {enemyName}: " + enemyDamageDeal);
     }
+
+    void EnemyMove()
+    {
+        if (target != null)
+        {
+            agent.speed = enemySpeed;
+            var pos = target.position;
+            pos.y = 0;
+            agent.SetDestination(pos);
+        }
+
+        if (agent.remainingDistance < capsuleCollider.radius * radiusMultiply)
+        {
+            agent.speed = 0f;
+        }
+
+    }
+
 
     void SwitchEnemyTarget()
     {
