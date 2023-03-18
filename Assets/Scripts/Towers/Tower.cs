@@ -7,14 +7,11 @@ public class Tower : MonoBehaviour
     [SerializeField] private TowerData m_data;
     [SerializeField] private LayerMask m_targetMask;
     [SerializeField] private GameObject m_bullet;
+    [SerializeField] private Transform m_gunTip;
 
     [HideInInspector] public List<GameObject> m_targets = new List<GameObject>();
     private GameObject m_curretTarget;
-
-    void Start()
-    {
-
-    }
+    private bool m_canAttack = true;
 
     void Update()
     {
@@ -43,15 +40,37 @@ public class Tower : MonoBehaviour
     public virtual void TowerAttack()
     {
         var vel = m_curretTarget.GetComponent<Rigidbody>().velocity;
-        var pos = m_curretTarget.transform.position +vel;
-        Debug.DrawLine(transform.position, pos);
-        transform.LookAt(new Vector3(pos.x, 0, pos.y));
+        var pos = m_curretTarget.transform.position + vel;
+        transform.LookAt(m_curretTarget.transform);
+
+        RaycastHit hit;
+        if (Physics.Raycast(m_gunTip.position, transform.forward, out hit, Mathf.Infinity, m_targetMask))
+        {
+            var name = LayerMask.LayerToName(hit.transform.gameObject.layer);
+            if (!name.Equals("Target"))
+            {
+                return;
+            }
+        }
+
+        if (m_canAttack)
+        {
+            var go = Instantiate(m_bullet, m_gunTip.position, Quaternion.identity);
+            go.transform.LookAt(hit.transform);
+            go.GetComponent<Rigidbody>().AddForce(transform.forward * 5f, ForceMode.Impulse);
+            StartCoroutine(ShotCooldown(m_data.m_fireRate));
+        }
     }
 
     public virtual void TowerTarget()
     {
         var obj = GetClosestEnemyPos();
         m_curretTarget = obj.go;
+    }
+
+    public void TakeDamage()
+    {
+
     }
 
     (Vector3 pos, GameObject go) GetClosestEnemyPos()
@@ -73,5 +92,12 @@ public class Tower : MonoBehaviour
         var closestPos = closest.transform.position;
         closestPos.y = transform.position.y;
         return closest != null ? (closestPos, closest) : (transform.position + transform.forward, null);
+    }
+
+    IEnumerator ShotCooldown(float seconds)
+    {
+        m_canAttack = false;
+        yield return new WaitForSeconds(seconds);
+        m_canAttack = true;
     }
 }

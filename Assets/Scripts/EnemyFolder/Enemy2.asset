@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Enemy2
   m_EditorClassIdentifier: 
   name: '"Spider"'
-  description: Should be a spider
+  description: Should be a SPIDER
   model: {fileID: 0}
   health: 100
-  speed: 1
+  speed: 2
   damageDeal: 2
   attackTime: 0
   radiusMultiply: 2

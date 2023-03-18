@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e002b5dd249174a8ff23683a48e2be, type: 3}
   m_Name: Enemy1
   m_EditorClassIdentifier: 
-  name: '"Mantis"'
-  description: Should be a mantis
+  name: '"Ant"'
+  description: Should be an ANT
   model: {fileID: 0}
   health: 50
-  speed: 1
+  speed: 0
   damageDeal: 100
   attackTime: 0
-  radiusMultiply: 10
+  radiusMultiply: 30

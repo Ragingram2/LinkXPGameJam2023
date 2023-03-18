@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e002b5dd249174a8ff23683a48e2be, type: 3}
   m_Name: Enemy4
   m_EditorClassIdentifier: 
-  name: EnemyType4
-  description: Should be a 4
+  name: '"Rhino bug"'
+  description: Should be a RHINO
   model: {fileID: 0}
   health: 100
-  speed: 1
+  speed: 0
   damageDeal: 6969
   attackTime: 0
   radiusMultiply: 20
