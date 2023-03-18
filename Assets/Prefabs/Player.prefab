@@ -154,7 +154,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_speed: 50
   animationController: {fileID: 8795769862577526301}
-  m_towerPrefab: {fileID: 0}
+  m_towerPrefab: {fileID: 4226136409204672637, guid: 58644ac0b184cbf47b11f8f832866564,
+    type: 3}
 --- !u!1 &7556023036210734234
 GameObject:
   m_ObjectHideFlags: 0
