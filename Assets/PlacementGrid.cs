@@ -86,14 +86,41 @@ public class PlacementGrid : MonoBehaviour
         return index;
     }
 
+    public GameObject GetObject(Vector3 pos)
+    {
+        return GetObject(GetIndex(pos));
+    }
+
+    public GameObject GetObject(Vector2 pos)
+    {
+        return GetObject(GetIndex(pos));
+    }
+
+    public GameObject GetObject(Vector2Int index)
+    {
+        if (index.x >= 0 && index.x < size.x && index.y >= 0 && index.y < size.y)
+        {
+            if (grid[index.x, index.y].enabled)
+            {
+                return grid[index.x, index.y].owner;
+            }
+        }
+
+        return null;
+    }
+
     public void FillItem(Vector3 pos, GameObject gameObject)
     {
-        FillItem(new Vector2(pos.x, pos.z), gameObject);
+        FillItem(GetIndex(pos), gameObject);
     }
 
     public void FillItem(Vector2 pos, GameObject gameObject)
     {
-        Vector2Int index = GetIndex(pos);
+        FillItem(GetIndex(pos), gameObject);
+    }
+
+    public void FillItem(Vector2Int index, GameObject gameObject)
+    {
         if (index.x >= 0 && index.x < size.x && index.y >= 0 && index.y < size.y)
         {
             if (grid[index.x, index.y].enabled)
