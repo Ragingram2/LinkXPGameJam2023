@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class Builder : MonoBehaviour
 {
@@ -94,6 +95,17 @@ public class Builder : MonoBehaviour
             {
                 Handles.Label(pos, $"{pos}");
                 Gizmos.DrawWireCube(pos, Vector3.one * m_cellsize);
+            }
+
+            Gizmos.color = Color.green;
+            for (int x = -5; x < 5; x++)
+            {
+                for (int y = -5; y < 5; y++)
+                {
+                    var pos = GetGridPos(transform.position + (new Vector3(x, 0, y) * m_cellsize));
+                    Handles.Label(pos, $"{pos}");
+                    Gizmos.DrawWireCube(pos, Vector3.one * m_cellsize);
+                }
             }
         }
     }
