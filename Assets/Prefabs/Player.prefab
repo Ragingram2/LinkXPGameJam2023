@@ -88,7 +88,7 @@ MonoBehaviour:
   m_speed: 3
   m_hitMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   m_direction: {x: 0, y: 0, z: 0}
   animationController: {fileID: 8795769862577526301}
 --- !u!114 &1911202825378588531
