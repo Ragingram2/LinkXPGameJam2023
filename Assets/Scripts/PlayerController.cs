@@ -19,8 +19,7 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.position += new Vector3(m_movement.x, 0, m_movement.y) * m_speed * 10f * Time.deltaTime * Time.deltaTime;
-        Debug.DrawRay(transform.position, m_movement.normalized);
+        transform.position += m_speed * Time.deltaTime * new Vector3(m_movement.x, 0, m_movement.y);
     }
 
     void OnFire(InputValue val)

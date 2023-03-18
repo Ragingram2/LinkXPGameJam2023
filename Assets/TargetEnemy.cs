@@ -45,8 +45,11 @@ public class TargetEnemy : MonoBehaviour
                 closest = go;
             }
         }
+        if(closest == null)
+            return transform.position + transform.forward;
+
         var closestPos = closest.transform.position;
         closestPos.y = transform.position.y;
-        return closest != null ? closestPos : transform.forward;
+        return closest != null ? closestPos : transform.position + transform.forward;
     }
 }
