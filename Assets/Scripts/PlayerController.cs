@@ -9,14 +9,15 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
     [SerializeField] private float m_speed = 10;
-
+    [HideInInspector] public Vector3 m_direction;
     public EntityAnimationController animationController;
-
     private Vector2 m_movement;
-    private Vector3 m_direction;
+    private Builder m_builder;
 
-    [Header("Build settings")]
-    [SerializeField] private GameObject m_towerPrefab;
+    private void Start()
+    {
+        m_builder = GetComponent<Builder>();
+    }
 
     void FixedUpdate()
     {
@@ -27,7 +28,7 @@ public class PlayerController : MonoBehaviour
     {
         if (val.IsPressed())
         {
-            Instantiate(m_towerPrefab, m_direction + transform.position, Quaternion.identity);
+            m_builder.BuildOnGrid(transform.position, m_direction);
         }
     }
 
@@ -39,12 +40,6 @@ public class PlayerController : MonoBehaviour
             m_direction = new Vector3(m_movement.x, 0, m_movement.y);
         }
         animationController.SetVelocity(m_movement);
-    }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(transform.position + m_direction, Vector3.one/2f);
     }
 }
 
