@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49e002b5dd249174a8ff23683a48e2be, type: 3}
   m_Name: Enemy3
   m_EditorClassIdentifier: 
-  name: '"Bee"'
-  description: Should be a bee
+  name: '"Martin"'
+  description: Should be a MARTIN
   model: {fileID: 0}
   health: 100
-  speed: 1
+  speed: 0
   damageDeal: 42069
   attackTime: 0
   radiusMultiply: 5
