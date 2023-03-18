@@ -85,7 +85,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4baf9ed1844d1d49b34a2b7165c05da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_speed: 2
+  m_speed: 3
+  m_hitMask:
+    serializedVersion: 2
+    m_Bits: 0
   m_direction: {x: 0, y: 0, z: 0}
   animationController: {fileID: 8795769862577526301}
 --- !u!114 &1911202825378588531
@@ -248,7 +251,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 556415678418857268}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
 --- !u!20 &753950418259599343
 Camera:
   m_ObjectHideFlags: 0
