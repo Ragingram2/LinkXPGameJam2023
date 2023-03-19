@@ -6,15 +6,10 @@ public class SpiderTower : Tower
 {
     float launchSpeed;
     Vector3 launchVel;
-    void OnValidate()
-    {
-        float x = m_data.m_range + 0.25001f;
-        float y = -transform.position.y;
-        launchSpeed = Mathf.Sqrt((y + Mathf.Sqrt(x * x + y * y)));
-    }
 
     public override void TowerAttack()
     {
+
         var targetPos = m_curretTarget.transform.position;
         transform.LookAt(m_curretTarget.transform);
         Debug.DrawLine(transform.position, targetPos);
@@ -29,10 +24,13 @@ public class SpiderTower : Tower
             }
         }
 
+        float px = Vector3.Distance(transform.position, m_curretTarget.transform.position) + 0.25001f;
+        float py = -transform.position.y;
+        launchSpeed = Mathf.Sqrt((py + Mathf.Sqrt(px * px + py * py)));
+
         Vector2 dir;
         dir.x = targetPos.x - m_gunTip.position.x;
         dir.y = targetPos.z - m_gunTip.position.z;
-        Debug.Log(dir);
         float x = dir.magnitude;
         float y = -m_gunTip.position.y;
         dir /= x;
@@ -46,11 +44,10 @@ public class SpiderTower : Tower
         float cosTheta = Mathf.Cos(Mathf.Atan(tanTheta));
         float sinTheta = cosTheta * tanTheta;
 
-        launchVel = new Vector3(s * cosTheta * dir.x, s * sinTheta, s * cosTheta * dir.y) * launchSpeed * 1000f;
-        //Debug.Log(launchVel);
+        launchVel = new Vector3(s * cosTheta * dir.x, s * sinTheta, s * cosTheta * dir.y) * launchSpeed;
         if (m_canAttack)
         {
-            var go = Instantiate(m_bullet, m_gunTip.transform.position + transform.forward, Quaternion.identity);
+            var go = Instantiate(m_bullet, m_gunTip.transform.position, Quaternion.identity);
             go.GetComponent<Rigidbody>().AddForce(launchVel, ForceMode.Impulse);
             StartCoroutine(ShotCooldown(m_data.m_fireRate));
         }

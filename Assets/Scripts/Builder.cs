@@ -9,7 +9,6 @@ public class Builder : MonoBehaviour
     [Header("Build settings")]
     [SerializeField] private GameObject m_towerPrefab;
     [SerializeField] private GameObject m_highlighter;
-    [SerializeField] private float m_cellsize = 10;
     [HideInInspector] private PlayerController m_player;
 
     void Start()
@@ -19,14 +18,13 @@ public class Builder : MonoBehaviour
 
     private void Update()
     {
-        m_highlighter.transform.localScale = Vector3.one * m_cellsize;
-        m_highlighter.transform.position = GetGridPos(transform.position + (m_player.m_direction * m_cellsize));
+        m_highlighter.transform.position = GetGridPos(PlacementGrid.instance.GetCenter(m_player.transform.position) + (m_player.m_direction * PlacementGrid.instance.itemWidth));
     }
 
     public GameObject BuildOnGrid(Vector3 pos)
     {
         var g_pos = GetGridPos(pos);
-        if (PlacementGrid.instance.GetObject(pos) == null)
+        if (PlacementGrid.instance.GetObject(g_pos) == null)
         {
             var go = Instantiate(m_towerPrefab, g_pos, Quaternion.identity);
             PlacementGrid.instance.FillItem(g_pos, go);
@@ -54,37 +52,5 @@ public class Builder : MonoBehaviour
     public Vector3 GetGridPos(Vector3 pos)
     {
         return PlacementGrid.instance.GetCenter(pos);
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (m_debugDraw)
-        {
-            Gizmos.color = Color.blue;
-            if (m_player != null)
-            {
-                var pos = GetGridPos(transform.position + (m_player.m_direction * m_cellsize));
-                Handles.Label(pos, $"{pos}");
-                Gizmos.DrawWireCube(pos, Vector3.one * m_cellsize);
-            }
-
-            //Gizmos.color = Color.red;
-            //foreach (var pos in m_activeTowers.Keys)
-            //{
-            //    Handles.Label(pos, $"{pos}");
-            //    Gizmos.DrawWireCube(pos, Vector3.one * m_cellsize);
-            //}
-
-            Gizmos.color = Color.green;
-            for (int x = -5; x < 5; x++)
-            {
-                for (int y = -5; y < 5; y++)
-                {
-                    var pos = GetGridPos(transform.position + (new Vector3(x, 0, y) * m_cellsize));
-                    Handles.Label(pos, $"{pos}");
-                    Gizmos.DrawWireCube(pos, Vector3.one * m_cellsize);
-                }
-            }
-        }
     }
 }
