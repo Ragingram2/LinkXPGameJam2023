@@ -45,14 +45,5 @@ public class PlayerController : MonoBehaviour
         m_movement = val.ReadValue<Vector2>();
         animationController.SetVelocity(m_movement);
     }
-
-    //private void OnDrawGizmos()
-    //{
-    //    if (m_builder == null)
-    //        return;
-
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawWireCube(m_builder.GetGridPos(transform.position + (m_direction * .3f)), Vector3.one * .3f);
-    //}
 }
 
