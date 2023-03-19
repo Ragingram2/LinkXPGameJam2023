@@ -65,7 +65,7 @@ MonoBehaviour:
   enemySphereCollider: {fileID: 0}
   turd: {fileID: 7026203840511631480, guid: dd1302a9b0ac12949b40fb4096da7514, type: 3}
   amountOfTurds: 4
-  entityAnimationController: {fileID: 0}
+  entityAnimationController: {fileID: 4854844708590149566}
 --- !u!195 &7169572004800063759
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -437,6 +437,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 307c74350aa4c0f43a0bcf440c5ee2e7, type: 3}
+--- !u!114 &4854844708590149566 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 568774221983245654, guid: 307c74350aa4c0f43a0bcf440c5ee2e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 4952673910530685672}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e325f567076b5b84ebbb90cd398583da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7537358401655011682 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3179960416192512906, guid: 307c74350aa4c0f43a0bcf440c5ee2e7,
