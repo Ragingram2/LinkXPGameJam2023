@@ -15,8 +15,8 @@ MonoBehaviour:
   name: '"Martin"'
   description: Should be a MARTIN
   controller: {fileID: 9100000, guid: 5cc825a35fea9724f8c22fb7aab6cc1d, type: 2}
-  maxHealth: 1000
-  speed: 2
-  damageDeal: 1
-  attackTime: 10
-  attackRadius: 4
+  maxHealth: 340
+  speed: 1
+  damageDeal: 10
+  attackTime: 1
+  attackRadius: 2
