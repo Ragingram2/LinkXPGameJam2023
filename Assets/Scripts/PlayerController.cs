@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     private Vector2 m_movement;
     private Builder m_builder;
     private Camera m_mainCamera;
+
+    public int money;
+
     private void Start()
     {
         m_builder = GetComponent<Builder>();
@@ -44,6 +47,15 @@ public class PlayerController : MonoBehaviour
     {
         m_movement = val.ReadValue<Vector2>();
         animationController.SetVelocity(m_movement);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == "Turd")
+        {
+            Destroy(collision.gameObject);
+            money++;
+        }
     }
 }
 
