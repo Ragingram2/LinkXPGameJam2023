@@ -8,6 +8,8 @@ ScriptedImporter:
   assetBundleName: 
   assetBundleVariant: 
   script: {fileID: 11500000, guid: dda12f74ff9116a42b23482252b2c482, type: 3}
-  _instancesCopy: []
-  _fileAsset: {instanceID: 0}
+  _instancesCopy:
+  - {fileID: 11400000, guid: 8f8038c986a35c147a049fe0d49b1407, type: 2}
+  _fileAsset: {fileID: 6013892654665635331, guid: 101e2c977456a1f4697591199ccdf189,
+    type: 3}
   _assetPath: Assets/Materials/BrickWallNoWindow.sbsar
