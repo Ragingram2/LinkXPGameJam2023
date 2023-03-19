@@ -7,7 +7,7 @@ public class Builder : MonoBehaviour
 {
     [SerializeField] private bool m_debugDraw = false;
     [Header("Build settings")]
-    [SerializeField] private GameObject m_towerPrefab;
+    [SerializeField] public GameObject m_towerPrefab;
     [SerializeField] private GameObject m_highlighter;
     [HideInInspector] private PlayerController m_player;
     public AudioSource audio_building;

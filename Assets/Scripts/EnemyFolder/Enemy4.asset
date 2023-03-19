@@ -15,8 +15,8 @@ MonoBehaviour:
   name: '"Rhino bug"'
   description: Should be a RHINO
   controller: {fileID: 9100000, guid: 5cc825a35fea9724f8c22fb7aab6cc1d, type: 2}
-  maxHealth: 22
+  maxHealth: 200
   speed: 2
-  damageDeal: 222
-  attackTime: 22
-  attackRadius: 2
+  damageDeal: 45
+  attackTime: 2
+  attackRadius: 3
