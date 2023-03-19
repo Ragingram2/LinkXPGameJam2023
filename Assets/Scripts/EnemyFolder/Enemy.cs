@@ -81,7 +81,6 @@ public class Enemy : MonoBehaviour
         }
     private void Start()
     {
-        Initialize(enemyData, Vector3.zero);
         buzzing_audio.Play();
     }
 
