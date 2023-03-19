@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3613fbde5d3aa7748b6523482682c396, type: 3}
-  m_Name: Wave 1
+  m_Name: Wave 5
   m_EditorClassIdentifier: 
-  enemySet: {fileID: 11400000, guid: bf39959c4e015cb47ba0b12e3b8f4ea2, type: 2}
-  spawnRate: 0.5
-  waveTimeLength: 20
-  spawnLocAmountRange: {x: 5, y: 10}
-  maxEnemies: 10
+  enemySet: {fileID: 11400000, guid: 335ff47c492d08147bb9df23f71e494f, type: 2}
+  spawnRate: 1
+  waveTimeLength: 30
+  spawnLocAmountRange: {x: 2, y: 3}
+  maxEnemies: 12

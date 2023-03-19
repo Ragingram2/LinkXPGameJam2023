@@ -23,8 +23,7 @@ public class Enemy : MonoBehaviour
     float enemyAttackRadius;
 
     bool canAttack;
-
-    
+    public bool m_slowed = false;
 
     public Rigidbody body;
     GameObject target;
@@ -61,7 +60,7 @@ public class Enemy : MonoBehaviour
         enemyCurrentHealth = enemyMaxHealth;
 
         enemySpeed = enemyData.speed;
-        agent.speed = enemySpeed; 
+        agent.speed = enemySpeed;
 
         enemyDamageDeal = enemyData.damageDeal;
 
@@ -78,11 +77,16 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         EnemyMove();
+
+        if (m_slowed)
+            agent.speed = enemySpeed * .1f;
+        else
+            agent.speed = enemySpeed;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.name.Equals("Core"))
+        if (collision.gameObject.name.Equals("Core"))
         {
             Destroy(gameObject);
         }
@@ -106,12 +110,12 @@ public class Enemy : MonoBehaviour
             agent.speed = 0f;
             EnemyAttack();
         }
-    }  
+    }
 
 
     void DebugLog()
     {
-        Debug.Log( $"Enemy type {enemyName}: " + enemyDamageDeal);
+        Debug.Log($"Enemy type {enemyName}: " + enemyDamageDeal);
     }
 
     public void SwitchEnemyTarget(Transform pTarget)
@@ -168,7 +172,7 @@ public class Enemy : MonoBehaviour
     protected virtual void EnemyAttack()
     {
         Tower temp = currentTarget.gameObject.GetComponent<Tower>();
-        
+
         if (canAttack)
         {
             temp.TakeDamage(enemyDamageDeal);
@@ -181,6 +185,13 @@ public class Enemy : MonoBehaviour
         canAttack = false;
         yield return new WaitForSeconds(seconds);
         canAttack = true;
+    }
+
+    public IEnumerator SlowdownEffect(float seconds)
+    {
+        m_slowed = true;
+        yield return new WaitForSeconds(seconds);
+        m_slowed = false;
     }
 
     private void OnDestroy()

@@ -152,4 +152,6 @@ MonoBehaviour:
   m_hitmask:
     serializedVersion: 2
     m_Bits: 192
-  m_blastRadius: 5
+  m_blastRadius: 2
+  m_slowDownTime: 2
+  m_damage: 10
