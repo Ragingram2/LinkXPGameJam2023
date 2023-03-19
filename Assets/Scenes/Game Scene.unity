@@ -946,12 +946,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1759695795}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9982ee35274d22341b9a0300fcd7a138, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 100000
 --- !u!114 &1920233476 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1911202825378588531, guid: 74c59612ddee7cb43bc4e7733c974a17,
@@ -1093,56 +1093,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 810009882360807534, guid: ac02a0fb34827f348a934d59106bbcbb,
-        type: 3}
-      propertyPath: m_spawnRadius
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 810009882360807534, guid: ac02a0fb34827f348a934d59106bbcbb,
-        type: 3}
-      propertyPath: m_restTimeLength
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 810009882360807534, guid: ac02a0fb34827f348a934d59106bbcbb,
-        type: 3}
-      propertyPath: m_waves.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 810009882360807534, guid: ac02a0fb34827f348a934d59106bbcbb,
-        type: 3}
-      propertyPath: m_waves.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 7044e9a62d85a6d4c8e663ce18f7e0e6,
-        type: 2}
-    - target: {fileID: 810009882360807534, guid: ac02a0fb34827f348a934d59106bbcbb,
-        type: 3}
-      propertyPath: m_waves.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: 3bee78b10223e5c4896cb4dbb0805744,
-        type: 2}
-    - target: {fileID: 810009882360807534, guid: ac02a0fb34827f348a934d59106bbcbb,
-        type: 3}
-      propertyPath: m_waves.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: 3bee78b10223e5c4896cb4dbb0805744,
-        type: 2}
-    - target: {fileID: 810009882360807534, guid: ac02a0fb34827f348a934d59106bbcbb,
-        type: 3}
-      propertyPath: m_waves.Array.data[3]
-      value: 
-      objectReference: {fileID: 11400000, guid: 3bee78b10223e5c4896cb4dbb0805744,
-        type: 2}
-    - target: {fileID: 810009882360807534, guid: ac02a0fb34827f348a934d59106bbcbb,
-        type: 3}
-      propertyPath: m_waves.Array.data[4]
-      value: 
-      objectReference: {fileID: 11400000, guid: 7044e9a62d85a6d4c8e663ce18f7e0e6,
-        type: 2}
-    - target: {fileID: 3293298401749700358, guid: ac02a0fb34827f348a934d59106bbcbb,
-        type: 3}
-      propertyPath: m_DefaultActionMap
-      value: 4eb3fd99-3a87-46bb-9e48-7d7e321ca1a9
-      objectReference: {fileID: 0}
     - target: {fileID: 5429360138549090075, guid: ac02a0fb34827f348a934d59106bbcbb,
         type: 3}
       propertyPath: m_Name
