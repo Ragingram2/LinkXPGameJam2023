@@ -5,42 +5,53 @@ using UnityEngine.UI;
 using TMPro;
 using System.Runtime.CompilerServices;
 
-public class MoneyAdd : MonoBehaviour
+public class UI : MonoBehaviour
 {
     public int wave = 0;
-    public int blob = 0;
+    public static int blob = 0;
     [SerializeField] public TMP_Text waveText;
     [SerializeField] public TMP_Text blobText;
     bool waveChanged = false;
 
     private void Start()
     {
-        
+
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyUp(KeyCode.P))
         {
+            Debug.Log("KeyPressed");
             wave++;
             waveText.text = "Wave:" + wave;
             waveChanged = true;
         }
 
-        if (Input.GetKeyDown(KeyCode.O) && wave > 0)
+        if (Input.GetKeyUp(KeyCode.O) && wave > 0)
         {
             wave--;
             waveText.text = "Wave:" + wave;
         }
         addCurrency();
-        
+
+    }
+
+    void addCurrency()
+    {
+        Debug.Log(waveChanged);
+        if (waveChanged == true && wave < 6)
+        {
+            Debug.Log("Add 12");
+            blob += 12;
+            blobText.text = " " + blob;
+            waveChanged = false;
         }
-        
-        void addCurrency()
+
+        if (waveChanged == true && wave >= 6)
         {
-        if (waveChanged == true)
-        {
-            blob += 10;
-            blobText.text = "0" + blob;
+            Debug.Log("What ever");
+            blob += (wave * 10) / 4;
+            blobText.text = " " + blob;
             waveChanged = false;
         }
 
