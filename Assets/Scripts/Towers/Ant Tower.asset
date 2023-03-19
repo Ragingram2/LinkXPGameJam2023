@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 520165c10baac5448885a866f55230c0, type: 3}
   m_Name: Ant Tower
   m_EditorClassIdentifier: 
+  m_health: -4500
   m_fireRate: 0.2
+  m_damage: 20
+  m_range: 30
