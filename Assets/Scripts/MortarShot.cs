@@ -13,6 +13,8 @@ public class MortarShot : MonoBehaviour
     public AttackType m_attackType;
     public LayerMask m_hitmask;
     public float m_blastRadius = 5f;
+    public float m_slowDownTime = 2f;
+    public int m_damage = 10;
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -20,7 +22,8 @@ public class MortarShot : MonoBehaviour
         if (layername.Equals("Ground") || layername.Equals("Target"))
         {
             AOEAttack();
-            Instantiate(m_explosion, transform.position, Quaternion.identity);
+            var go = Instantiate(m_explosion, transform.position, Quaternion.identity);
+            go.transform.localScale = Vector3.one * (m_blastRadius + m_blastRadius);
             Destroy(gameObject);
         }
     }
@@ -36,10 +39,10 @@ public class MortarShot : MonoBehaviour
                 switch (m_attackType)
                 {
                     case AttackType.Poison:
-                        //do poison stuff
+                        enemy.EnemyTakeDamage(m_damage, gameObject);
                         break;
                     case AttackType.SlowDown:
-                        //do slow stuff
+                        StartCoroutine(enemy.SlowdownEffect(m_slowDownTime));
                         break;
                 }
             }
