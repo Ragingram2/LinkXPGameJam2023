@@ -13,24 +13,8 @@ public class MoneyAdd : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            wave++;
-            waveText.text = "Wave:" + wave;
-            waveChanged = true;
-        }
-
-        if (Input.GetKeyDown(KeyCode.O) && wave > 0)
-        {
-            wave--;
-            waveText.text = "Wave:" + wave;
-        }
-
-        if(waveChanged == true)
-        {
-
-        }
-
+        wave = EnemySpawner.m_waveCount;
+        waveText.text = "Wave:" + wave;
 
     }
 }
