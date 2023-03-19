@@ -18,6 +18,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float m_spawnRadius = 10;
     private List<Vector3> m_spawnPositions = new List<Vector3>();
 
+    public static int m_waveCount = 0;
     private bool m_waveRuning = false;
     public static int m_enemyCount = 0;
     private int m_maxEnemies = 100;
@@ -42,6 +43,7 @@ public class EnemySpawner : MonoBehaviour
             {
                 m_waveRuning = true;
                 m_restTime = 0.0f;
+                m_waveCount++;
             }
         }
     }
