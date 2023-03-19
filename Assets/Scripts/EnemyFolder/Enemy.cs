@@ -97,7 +97,6 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.TryGetComponent<Tower>(out temp))
         {
             temp.TakeDamage(enemyDamageDeal);
-            //deal damage to tower with enemyDamageDeal variable?
         }
     }
 
@@ -137,13 +136,15 @@ public class Enemy : MonoBehaviour
         }
         enemyCurrentHealth -= _damageAmmount;
         Debug.Log(enemyCurrentHealth);
-        //bulletOwner.GetComponent<Tower>().m_targets.Remove(temp);
-        //When you get the tower reference from the bullet, if enemy dead, m_targets goodbye
 
         if (enemyCurrentHealth <= 0)
         {
             bulletOwner.GetComponent<Tower>().m_targets.Remove(gameObject);
-            GameObject.Destroy(gameObject);
+            for (int i = 0; i < amountOfTurds; i++)
+            {
+                Instantiate(turd, transform.position, Quaternion.identity);
+            }
+            Destroy(gameObject);
         }
     }
 
@@ -185,10 +186,7 @@ public class Enemy : MonoBehaviour
     private void OnDestroy()
     {
         EnemySpawner.m_alliveCount--;
-        for (int i = 0; i < amountOfTurds; i++)
-        {
-            Instantiate(turd, transform.position, Quaternion.identity);
-        }
+        
         
     }
 }
