@@ -31,25 +31,25 @@ public class Enemy : MonoBehaviour
     Transform currentTarget;
     Transform finalTarget;
     public NavMeshAgent agent;
-    public CapsuleCollider capsuleCollider;
 
     public BoxCollider targetBoxCollider; //should be farm or wall collider
     public SphereCollider enemySphereCollider;
 
     public GameObject turd;
     public int amountOfTurds;
+
+    public EntityAnimationController entityAnimationController;
     
     public void Initialize(EnemyData data, Vector3 pos)
     {
         enemyData = data;
 
-        target = GameObject.Find("TestTarget");
+        target = GameObject.Find("Core");
         currentTarget = target.transform;
         finalTarget = target.transform;
 
         agent = GetComponent<NavMeshAgent>();
         //agent.Warp(pos);
-        capsuleCollider = GetComponent<CapsuleCollider>();
         enemySphereCollider = GetComponent<SphereCollider>();
 
         targetBoxCollider = currentTarget.GetComponent<BoxCollider>();//when towers, capsule
@@ -70,12 +70,9 @@ public class Enemy : MonoBehaviour
         enemyAttackRadius = enemyData.attackRadius;
         enemySphereCollider.radius = enemyAttackRadius;
 
-        DebugLog();
-    }
+        entityAnimationController.GetComponent<Animator>().runtimeAnimatorController = enemyData.controller;
 
-    private void Start()
-    {
-        Initialize(enemyData, Vector3.zero);
+        DebugLog();
     }
 
     void Update()
@@ -163,6 +160,9 @@ public class Enemy : MonoBehaviour
             Debug.Log("There is no target");
             currentTarget = finalTarget;
         }
+
+        Vector3 movement = agent.velocity;
+        entityAnimationController.SetVelocity(new Vector2(movement.x, movement.z));
     }
 
     protected virtual void EnemyAttack()

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: '"Martin"'
   description: Should be a MARTIN
-  model: {fileID: 0}
+  controller: {fileID: 9100000, guid: 5cc825a35fea9724f8c22fb7aab6cc1d, type: 2}
   maxHealth: 1000
   speed: 2
   damageDeal: 1

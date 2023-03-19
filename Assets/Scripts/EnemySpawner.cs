@@ -78,8 +78,8 @@ public class EnemySpawner : MonoBehaviour
             foreach (var pos in m_spawnPositions)
             {
                 var rand = Random.Range(0, enemySet.m_enemies.Count);
-                var go = Instantiate(m_enemy, pos, Quaternion.identity);
-                go.GetComponent<Enemy>().Initialize(enemySet.m_enemies[rand], pos);
+                Enemy enemy = Instantiate(m_enemy, pos, Quaternion.identity).GetComponent<Enemy>();
+                enemy.Initialize(enemySet.m_enemies[rand], pos);
                 m_enemyCount++;
                 m_alliveCount++;
             }
