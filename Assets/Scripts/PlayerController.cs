@@ -40,13 +40,11 @@ public class PlayerController : MonoBehaviour
             if (!audio_walking.isPlaying)
             {
                 audio_walking.Play();
-                Debug.Log("Moving");
             }
         }
         else if (m_movement.magnitude == 0 && audio_walking.isPlaying)
         {
             audio_walking.Stop();
-            Debug.Log("Stop Moving");
         }
     }
 

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Animations;
 using UnityEngine;
 
 
@@ -10,7 +9,7 @@ public class EnemyData : ScriptableObject
 {
     public new string name;
     public string description;
-    public AnimatorController controller;
+    public RuntimeAnimatorController controller;
 
     public int maxHealth;
     public float speed;

@@ -40,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
         else
         {
             m_displayTime = $"{(int)m_restTime / 60}:{m_restTime % 60:00}";
-            Debug.Log($"Rest Time: {m_displayTime}");
+
             m_restTime += Time.deltaTime;
             if (m_restTime > m_restTimeLength)
             {
@@ -90,7 +90,6 @@ public class EnemySpawner : MonoBehaviour
             {
                 m_allEnemiesSpawned = true;
                 m_enemyCount = 0;
-                Debug.Log("All Enemies spawned");
             }
             else
             {
@@ -103,11 +102,9 @@ public class EnemySpawner : MonoBehaviour
         {
             m_waveTime = 0;
             EndWave();
-            Debug.Log("Ending wave");
         }
 
         m_displayTime = $" {(int)m_waveTime / 60}:{m_waveTime % 60:00}";
-        Debug.Log($"Wave Time: {m_displayTime}");
     }
 
     void EndWave()

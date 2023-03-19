@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static UnityEditor.PlayerSettings;
 using static UnityEngine.Rendering.VolumeComponent;
 using static UnityEngine.UI.Image;
 
@@ -33,15 +32,7 @@ public class PlacementGrid : MonoBehaviour
 
     public static PlacementGrid instance = null;
 
-    private void OnEnable()
-    {
-        instance = null;
-    }
-
-    private void OnValidate()
-    {
-        RecalculateGrid();
-    }
+    public ExcludeBuild excludeBuild;
 
     private void Start()
     {
@@ -55,27 +46,21 @@ public class PlacementGrid : MonoBehaviour
         yScaleHex = 0.5f / Mathf.Tan(Mathf.Deg2Rad * 30f);
         grid = new GridItem[size.x, size.y];
 
+        Vector3 position = transform.position;
+        totalSize = new Vector2(itemWidth * size.x, size.y * (hexagonal ? itemWidth * yScaleHex : itemWidth));
+        origin = new Vector2(position.x, position.z) - totalSize * 0.5f;
+
         for (int x = 0; x < size.x; x++)
         {
             for (int y = 0; y < size.y; y++)
             {
                 Vector3 pos = GetCenter(new Vector2Int(x, y)) + Vector3.up * 50f;
-                Debug.DrawRay(pos, Vector3.down);
                 RaycastHit m_hit;
                 grid[x, y] = new GridItem(null, Physics.Raycast(new Ray(pos, Vector3.down), out m_hit, 100, groundMask));
             }
         }
 
-        Vector3 position = transform.position;
-        totalSize = new Vector2(itemWidth * size.x, size.y * (hexagonal ? itemWidth * yScaleHex : itemWidth));
-        origin = new Vector2(position.x, position.z) - totalSize * 0.5f;
-
-        Debug.Log($"Found {ExcludeBuild.exclusionZones.Count} exclusion zones");
-
-        foreach (ExcludeBuild exclusionZone in ExcludeBuild.exclusionZones)
-        {
-            FillRange(exclusionZone.transform.localToWorldMatrix, exclusionZone.bounds, exclusionZone.gameObject);
-        }
+        FillRange(excludeBuild.transform.localToWorldMatrix, excludeBuild.bounds, excludeBuild.gameObject);
 
         instance = this;
     }
