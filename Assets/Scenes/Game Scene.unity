@@ -610,6 +610,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2068606036 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3528777993067549841, guid: 256fd9760f775c540aefe448b63bab03,
+    type: 3}
+  m_PrefabInstance: {fileID: 6050097457334843000}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2068606040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068606036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 948613a4e0009c7409c10c6270812443, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &56381250634501762
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -944,7 +962,12 @@ PrefabInstance:
       value: FarmPlaceholder
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3566231756930949452, guid: 256fd9760f775c540aefe448b63bab03, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3528777993067549841, guid: 256fd9760f775c540aefe448b63bab03,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2068606040}
   m_SourcePrefab: {fileID: 100100000, guid: 256fd9760f775c540aefe448b63bab03, type: 3}
