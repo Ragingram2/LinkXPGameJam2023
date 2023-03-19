@@ -22,14 +22,13 @@ public class Enemy : MonoBehaviour
     float enemyAttackTime;
     float enemyAttackRadius;
 
-    bool canAttack;
-
-    
+    bool canAttack = true;
+    public bool canSwitchTarget = true;
 
     public Rigidbody body;
     GameObject target;
     Transform currentTarget;
-    Transform finalTarget;
+    public Transform finalTarget;
     public NavMeshAgent agent;
     public CapsuleCollider capsuleCollider;
 
@@ -38,12 +37,12 @@ public class Enemy : MonoBehaviour
 
     public GameObject turd;
     public int amountOfTurds;
-    
+
     public void Initialize(EnemyData data, Vector3 pos)
     {
         enemyData = data;
 
-        target = GameObject.Find("TestTarget");
+        target = GameObject.Find("Core");
         currentTarget = target.transform;
         finalTarget = target.transform;
 
@@ -61,7 +60,7 @@ public class Enemy : MonoBehaviour
         enemyCurrentHealth = enemyMaxHealth;
 
         enemySpeed = enemyData.speed;
-        agent.speed = enemySpeed; 
+        agent.speed = enemySpeed;
 
         enemyDamageDeal = enemyData.damageDeal;
 
@@ -85,7 +84,7 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.name.Equals("Core"))
+        if (collision.gameObject.name.Equals("Core"))
         {
             Destroy(gameObject);
         }
@@ -96,26 +95,27 @@ public class Enemy : MonoBehaviour
         Tower temp;
         if (collision.gameObject.TryGetComponent<Tower>(out temp))
         {
-            temp.TakeDamage(enemyDamageDeal);
+            temp.TakeDamage(enemyDamageDeal, gameObject);
         }
     }
-
-    void OnTriggerStay(Collider collider)
-    {
-        Tower temp;
-        if (collider.gameObject.TryGetComponent<Tower>(out temp))
-        {
-            transform.LookAt(collider.transform.position);
-            agent.speed = 0f;
-            EnemyAttack();
-        }
-    }  
-
 
     void DebugLog()
     {
-        Debug.Log( $"Enemy type {enemyName}: " + enemyDamageDeal);
+        Debug.Log($"Enemy type {enemyName}: " + enemyDamageDeal);
     }
+
+
+
+    void DistanceChecker(Vector3 enemy, Vector3 tower)
+    {
+        float theDistance = Vector3.Distance(enemy, tower);
+        if (theDistance <= enemyAttackRadius)
+        {
+            agent.speed = 0f;
+            EnemyAttack();
+        }
+    }
+
 
     public void SwitchEnemyTarget(Transform pTarget)
     {
@@ -130,13 +130,21 @@ public class Enemy : MonoBehaviour
 
     public void EnemyTakeDamage(int _damageAmmount, GameObject bulletOwner)
     {
-        if (currentTarget.tag != "Tower")
+        if (canSwitchTarget)
         {
-            SwitchEnemyTarget(bulletOwner.transform);
-        }
-        enemyCurrentHealth -= _damageAmmount;
-        Debug.Log(enemyCurrentHealth);
+            if (bulletOwner != null)
+            {
+                SwitchEnemyTarget(bulletOwner.transform);
+                canSwitchTarget = false;
+            }
 
+            if (bulletOwner == null)
+            {
+                SwitchEnemyTarget(finalTarget);
+            }
+        }
+
+        enemyCurrentHealth -= _damageAmmount;
         if (enemyCurrentHealth <= 0)
         {
             bulletOwner.GetComponent<Tower>().m_targets.Remove(gameObject);
@@ -157,6 +165,10 @@ public class Enemy : MonoBehaviour
             var pos = currentTarget.position;
             pos.y = 0;
             agent.SetDestination(pos);
+            if (currentTarget.tag == "Tower")
+            {
+                DistanceChecker(gameObject.transform.position, currentTarget.transform.position);
+            }  
         }
         else
         {
@@ -168,10 +180,11 @@ public class Enemy : MonoBehaviour
     protected virtual void EnemyAttack()
     {
         Tower temp = currentTarget.gameObject.GetComponent<Tower>();
-        
-        if (canAttack)
+
+        if (canAttack && temp != null)
         {
-            temp.TakeDamage(enemyDamageDeal);
+            temp.TakeDamage(enemyDamageDeal,gameObject);
+            Debug.Log("attacked target");
             StartCoroutine(EnemyAttackCooldown(enemyAttackTime));
         }
     }
@@ -186,10 +199,7 @@ public class Enemy : MonoBehaviour
     private void OnDestroy()
     {
         EnemySpawner.m_alliveCount--;
-        
-        
+
+
     }
 }
-
-//2. Enemy attack - time between attacks, type of attack etc.
-//3. Switch enemy target - if attacked, change target to it, if there's no target, change it back to farm
