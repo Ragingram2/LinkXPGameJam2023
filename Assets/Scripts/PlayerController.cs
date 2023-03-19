@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     private Camera m_mainCamera;
     public AudioSource audio_walking;
 
-    public int money;
+    public static int money = 1000;
 
     private void Start()
     {
