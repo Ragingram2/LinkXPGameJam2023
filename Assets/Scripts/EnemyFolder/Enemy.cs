@@ -85,13 +85,10 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //Farm farmy;
-        //GameObject thisEnemy = this.gameObject;
-        //if (collision.gameObject.TryGetComponent<Farm>(out farmy))
-        //{
-        //    GameObject.Destroy(thisEnemy);
-        //    farmy.gameObject.takeDamage(1);
-        //}
+        if(collision.gameObject.name.Equals("Core"))
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnCollisionStay(Collision collision)
@@ -187,7 +184,7 @@ public class Enemy : MonoBehaviour
 
     private void OnDestroy()
     {
-        EnemySpawner.m_enemyCount--;
+        EnemySpawner.m_alliveCount--;
         for (int i = 0; i < amountOfTurds; i++)
         {
             Instantiate(turd, transform.position, Quaternion.identity);
