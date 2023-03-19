@@ -70,7 +70,7 @@ public class EnemySpawner : MonoBehaviour
             {
                 var rand = Random.Range(0, enemySet.m_enemies.Count);
                 var go = Instantiate(m_enemy, pos, Quaternion.identity);
-                go.GetComponent<Enemy>().initialize(enemySet.m_enemies[rand], pos);
+                go.GetComponent<Enemy>().Initialize(enemySet.m_enemies[rand], pos);
                 m_enemyCount++;
             }
             StartCoroutine(SpawnCycle(m_spawnRate));
