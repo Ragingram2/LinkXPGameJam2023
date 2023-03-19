@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: '"Ant"'
   description: Should be an ANT
-  model: {fileID: 0}
+  controller: {fileID: 9100000, guid: 5cc825a35fea9724f8c22fb7aab6cc1d, type: 2}
   maxHealth: 100
   speed: 2
   damageDeal: 100

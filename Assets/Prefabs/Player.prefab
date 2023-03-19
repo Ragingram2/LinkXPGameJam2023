@@ -37,7 +37,7 @@ Transform:
   - {fileID: 5319830777805383643}
   - {fileID: 1374729358129431726}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &7943547277438967553
 BoxCollider:
@@ -91,6 +91,7 @@ MonoBehaviour:
     m_Bits: 256
   m_direction: {x: 0, y: 0, z: 0}
   animationController: {fileID: 8795769862577526301}
+  money: 0
 --- !u!114 &1911202825378588531
 MonoBehaviour:
   m_ObjectHideFlags: 0

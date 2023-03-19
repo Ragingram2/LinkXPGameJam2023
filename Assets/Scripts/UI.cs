@@ -38,7 +38,6 @@ public class UI : MonoBehaviour
 
     void addCurrency()
     {
-        Debug.Log(waveChanged);
         if (waveChanged == true && wave < 6)
         {
             Debug.Log("Add 12");
