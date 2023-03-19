@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Runtime.CompilerServices;
 
 public class MoneyAdd : MonoBehaviour
 {
     public int wave = 0;
+    public int blob = 0;
     [SerializeField] public TMP_Text waveText;
-    [SerializeField] public TMP_Text currencyText;
+    [SerializeField] public TMP_Text blobText;
     bool waveChanged = false;
 
+    private void Start()
+    {
+        
+    }
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.P))
@@ -25,12 +31,18 @@ public class MoneyAdd : MonoBehaviour
             wave--;
             waveText.text = "Wave:" + wave;
         }
-
-        if(waveChanged == true)
-        {
-
+        addCurrency();
+        
         }
-
+        
+        void addCurrency()
+        {
+        if (waveChanged == true)
+        {
+            blob += 10;
+            blobText.text = "0" + blob;
+            waveChanged = false;
+        }
 
     }
 }
