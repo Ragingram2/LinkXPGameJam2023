@@ -11,7 +11,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private List<EnemySet> m_enemySets;
     [SerializeField] private float m_spawnRate = 1.0f;
     [SerializeField] private float m_waveTimeLength = 180.0f;
-     private float m_waveTime = 0.0f;
+    private float m_waveTime = 0.0f;
     [SerializeField] private float m_restTimeLength = 180.0f;
     private float m_restTime = 0.0f;
     [SerializeField] private Vector2 m_spawnLocAmountRange = new Vector2(5, 10);
@@ -19,8 +19,9 @@ public class EnemySpawner : MonoBehaviour
     private List<Vector3> m_spawnPositions = new List<Vector3>();
 
     private bool m_waveRuning = false;
-    private int m_enemyCount = 0;
-    private bool m_spawn = false;
+    public static int m_enemyCount = 0;
+    private int m_maxEnemies = 100;
+    private bool m_spawn = true;
 
     private void Start()
     {
@@ -35,8 +36,9 @@ public class EnemySpawner : MonoBehaviour
         }
         else
         {
+            Debug.Log($"Rest Time: {(int)m_restTime / 60}:{m_restTime % 60:00}");
             m_restTime += Time.deltaTime;
-            if(m_restTime > m_restTimeLength)
+            if (m_restTime > m_restTimeLength)
             {
                 m_waveRuning = true;
                 m_restTime = 0.0f;
@@ -57,24 +59,8 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
-    void OnStartWave(InputAction val)
-    {
-        if (val.IsPressed() && !m_waveRuning)
-        {
-            m_waveRuning = true;
-        }
-    }
-
     void UpdateWave()
     {
-        m_waveTime += Time.deltaTime;
-        if(m_waveTime >= m_waveTimeLength)
-        {
-            m_waveTime = 0;
-            m_spawn = false;
-            EndWave();
-        }
-
         if (m_spawn)
         {
             var enemySet = m_enemySets[0];
@@ -82,16 +68,27 @@ public class EnemySpawner : MonoBehaviour
             {
                 var rand = Random.Range(0, enemySet.m_enemies.Count);
                 var go = Instantiate(m_enemy, pos, Quaternion.identity);
-                go.GetComponent<Enemy>().initialize(enemySet.m_enemies[rand]);
+                go.GetComponent<Enemy>().initialize(enemySet.m_enemies[rand], pos);
                 m_enemyCount++;
             }
             StartCoroutine(SpawnCycle(m_spawnRate));
         }
+
+        m_waveTime += Time.deltaTime;
+        if (m_waveTime >= m_waveTimeLength || m_enemyCount <= 0)
+        {
+            m_waveTime = 0;
+            m_spawn = false;
+            EndWave();
+        }
+
+        Debug.Log($"Wave Time: {(int)m_waveTime / 60}:{m_waveTime % 60:00}");
     }
 
     void EndWave()
     {
         m_waveRuning = false;
+        InitNextWave();
     }
 
     private void OnDrawGizmos()
@@ -104,9 +101,10 @@ public class EnemySpawner : MonoBehaviour
             Gizmos.DrawSphere(pos, 1);
         }
     }
+
     IEnumerator SpawnCycle(float seconds)
     {
-        m_spawn= false;
+        m_spawn = false;
         yield return new WaitForSeconds(seconds);
         m_spawn = true;
     }

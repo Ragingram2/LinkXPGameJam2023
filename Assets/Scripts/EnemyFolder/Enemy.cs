@@ -32,9 +32,9 @@ public class Enemy : MonoBehaviour
     public CapsuleCollider capsuleCollider;
 
     public BoxCollider targetBoxCollider; //should be farm or wall collider
-    public SphereCollider enemySphereCollider;  
+   // public SphereCollider enemySphereCollider;  
     
-    public void initialize(EnemyData data)
+    public void initialize(EnemyData data, Vector3 pos)
     {
         enemyData = data;
 
@@ -43,8 +43,9 @@ public class Enemy : MonoBehaviour
         finalTarget = target.transform;
 
         agent = GetComponent<NavMeshAgent>();
+        agent.Warp(pos);
         capsuleCollider = GetComponent<CapsuleCollider>();
-        enemySphereCollider = GetComponent<SphereCollider>();
+        //enemySphereCollider = GetComponent<SphereCollider>();
 
         targetBoxCollider = currentTarget.GetComponent<BoxCollider>();//when towers, capsule
 
@@ -62,7 +63,7 @@ public class Enemy : MonoBehaviour
         enemyAttackTime = enemyData.attackTime;
 
         enemyAttackRadius = enemyData.attackRadius;
-        enemySphereCollider.radius = enemyAttackRadius;
+        //enemySphereCollider.radius = enemyAttackRadius;
 
         DebugLog();
     }
@@ -164,6 +165,11 @@ public class Enemy : MonoBehaviour
         canAttack = false;
         yield return new WaitForSeconds(seconds);
         canAttack = true;
+    }
+
+    private void OnDestroy()
+    {
+        EnemySpawner.m_enemyCount--;
     }
 }
 

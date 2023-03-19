@@ -14,13 +14,14 @@ GameObject:
   - component: {fileID: 912497730472856660}
   - component: {fileID: 2455456897380085752}
   - component: {fileID: 7169572004800063759}
-  m_Layer: 0
+  - component: {fileID: -2286942703673960060}
+  m_Layer: 6
   m_Name: Enemy 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4866091406128874053
 Transform:
   m_ObjectHideFlags: 0
@@ -30,11 +31,11 @@ Transform:
   m_GameObject: {fileID: 6038048078037013295}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.81, y: 0.295, z: -10.13}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8229908841437300730
 MeshFilter:
@@ -124,10 +125,10 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: e263e1e3c33d77840a294c0478b0fc10, type: 2}
   enemyName: Enemy
   enemyDescription: 
-  radiusMultiply: 1
-  target: {fileID: 0}
+  body: {fileID: 0}
   agent: {fileID: 0}
   capsuleCollider: {fileID: 0}
+  targetBoxCollider: {fileID: 0}
 --- !u!195 &7169572004800063759
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -150,3 +151,30 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!54 &-2286942703673960060
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6038048078037013295}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
