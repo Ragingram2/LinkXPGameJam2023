@@ -10,6 +10,7 @@ public class Builder : MonoBehaviour
     [SerializeField] private GameObject m_towerPrefab;
     [SerializeField] private GameObject m_highlighter;
     [HideInInspector] private PlayerController m_player;
+    public AudioSource audio_building;
 
     void Start()
     {
@@ -29,6 +30,7 @@ public class Builder : MonoBehaviour
         {
             var go = Instantiate(m_towerPrefab, g_pos, Quaternion.identity);
             PlacementGrid.instance.FillItem(g_pos, go);
+            audio_building.Play();
             return go;
         }
         return null;
@@ -38,6 +40,7 @@ public class Builder : MonoBehaviour
     {
         var g_pos = GetGridPos(pos);
         return GetTower(g_pos);
+        
     }
 
     public GameObject GetTower(Vector2 key)

@@ -24,6 +24,9 @@ public class Enemy : MonoBehaviour
 
     bool canAttack;
 
+    public AudioSource attacking_audio;
+    public AudioSource buzzing_audio;
+
     
 
     public Rigidbody body;
@@ -76,6 +79,7 @@ public class Enemy : MonoBehaviour
     private void Start()
     {
         Initialize(enemyData, Vector3.zero);
+        buzzing_audio.Play();
     }
 
     void Update()
@@ -171,6 +175,7 @@ public class Enemy : MonoBehaviour
         
         if (canAttack)
         {
+            //enemy attack
             temp.TakeDamage(enemyDamageDeal);
             StartCoroutine(EnemyAttackCooldown(enemyAttackTime));
         }
