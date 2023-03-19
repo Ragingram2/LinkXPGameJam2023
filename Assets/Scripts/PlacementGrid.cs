@@ -21,7 +21,7 @@ public class PlacementGrid : MonoBehaviour
     public float itemWidth;
     public bool hexagonal;
 
-    public float yScaleHex = 0.5f / Mathf.Tan(Mathf.Deg2Rad * 30f);
+    private float yScaleHex;
 
     public LayerMask groundMask;
 
@@ -40,7 +40,6 @@ public class PlacementGrid : MonoBehaviour
 
     private void OnValidate()
     {
-        yScaleHex = 0.5f / Mathf.Tan(Mathf.Deg2Rad * 30f);
         RecalculateGrid();
     }
 
@@ -52,6 +51,8 @@ public class PlacementGrid : MonoBehaviour
     public void RecalculateGrid()
     {
         Debug.Log("Recalculating grid");
+
+        yScaleHex = 0.5f / Mathf.Tan(Mathf.Deg2Rad * 30f);
         grid = new GridItem[size.x, size.y];
 
         for (int x = 0; x < size.x; x++)
