@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
 
     bool canAttack;
     public bool m_slowed = false;
+    public bool canSwitchTarget = true;
 
     public AudioSource attacking_audio;
     public AudioSource buzzing_audio;
@@ -53,7 +54,7 @@ public class Enemy : MonoBehaviour
         finalTarget = target.transform;
 
         agent = GetComponent<NavMeshAgent>();
-        //agent.Warp(pos);
+        agent.Warp(pos);
         enemySphereCollider = GetComponent<SphereCollider>();
 
         targetBoxCollider = currentTarget.GetComponent<BoxCollider>();//when towers, capsule
