@@ -15,8 +15,8 @@ MonoBehaviour:
   name: '"Spider"'
   description: Should be a SPIDER
   model: {fileID: 0}
-  health: 100
+  maxHealth: 100
   speed: 2
   damageDeal: 2
-  attackTime: 0
-  radiusMultiply: 2
+  attackTime: 5
+  attackRadius: 4
