@@ -5,4 +5,5 @@ using UnityEngine;
 public class EnemyType1 : Enemy
 {
 
+
 }

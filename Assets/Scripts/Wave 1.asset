@@ -9,14 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49e002b5dd249174a8ff23683a48e2be, type: 3}
-  m_Name: Enemy2
+  m_Script: {fileID: 11500000, guid: 3613fbde5d3aa7748b6523482682c396, type: 3}
+  m_Name: Wave 1
   m_EditorClassIdentifier: 
-  name: '"Spider"'
-  description: Should be a SPIDER
-  model: {fileID: 0}
-  maxHealth: 100
-  speed: 2
-  damageDeal: 2
-  attackTime: 5
-  attackRadius: 3
+  enemySet: {fileID: 11400000, guid: bf39959c4e015cb47ba0b12e3b8f4ea2, type: 2}
+  spawnRate: 0.5
+  waveTimeLength: 20
+  spawnLocAmountRange: {x: 5, y: 10}
+  maxEnemies: 10
