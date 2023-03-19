@@ -34,20 +34,23 @@ public class Enemy : MonoBehaviour
     public CapsuleCollider capsuleCollider;
 
     public BoxCollider targetBoxCollider; //should be farm or wall collider
-   // public SphereCollider enemySphereCollider;  
+    public SphereCollider enemySphereCollider;
+
+    public GameObject turd;
+    public int amountOfTurds;
     
-    public void initialize(EnemyData data, Vector3 pos)
+    public void Initialize(EnemyData data, Vector3 pos)
     {
         enemyData = data;
 
-        target = GameObject.Find("Core");
+        target = GameObject.Find("TestTarget");
         currentTarget = target.transform;
         finalTarget = target.transform;
 
         agent = GetComponent<NavMeshAgent>();
-        agent.Warp(pos);
+        //agent.Warp(pos);
         capsuleCollider = GetComponent<CapsuleCollider>();
-        //enemySphereCollider = GetComponent<SphereCollider>();
+        enemySphereCollider = GetComponent<SphereCollider>();
 
         targetBoxCollider = currentTarget.GetComponent<BoxCollider>();//when towers, capsule
 
@@ -65,9 +68,14 @@ public class Enemy : MonoBehaviour
         enemyAttackTime = enemyData.attackTime;
 
         enemyAttackRadius = enemyData.attackRadius;
-        //enemySphereCollider.radius = enemyAttackRadius;
+        enemySphereCollider.radius = enemyAttackRadius;
 
         DebugLog();
+    }
+
+    private void Start()
+    {
+        Initialize(enemyData, Vector3.zero);
     }
 
     void Update()
@@ -96,7 +104,7 @@ public class Enemy : MonoBehaviour
     void OnTriggerStay(Collider collider)
     {
         Tower temp;
-        if (/*collider.gameObject.TryGetComponent<Tower>(out temp && */currentTarget.tag == "Tower")
+        if (collider.gameObject.TryGetComponent<Tower>(out temp))
         {
             transform.LookAt(collider.transform.position);
             agent.speed = 0f;
@@ -110,8 +118,6 @@ public class Enemy : MonoBehaviour
         Debug.Log( $"Enemy type {enemyName}: " + enemyDamageDeal);
     }
 
-
-    //If attacked by tower, it targets it, and when it gets within range, it attacks
     public void SwitchEnemyTarget(Transform pTarget)
     {
         Debug.Log($"Should've switched target to {pTarget.name}");
@@ -125,18 +131,19 @@ public class Enemy : MonoBehaviour
 
     public void EnemyTakeDamage(int _damageAmmount, GameObject bulletOwner)
     {
-        GameObject temp = this.gameObject;
-
-        SwitchEnemyTarget(bulletOwner.transform);
-
+        if (currentTarget.tag != "Tower")
+        {
+            SwitchEnemyTarget(bulletOwner.transform);
+        }
         enemyCurrentHealth -= _damageAmmount;
         Debug.Log(enemyCurrentHealth);
+        //bulletOwner.GetComponent<Tower>().m_targets.Remove(temp);
         //When you get the tower reference from the bullet, if enemy dead, m_targets goodbye
 
         if (enemyCurrentHealth <= 0)
         {
-            GameObject.Destroy(temp);
-            Debug.Log("Enemy is dead");
+            bulletOwner.GetComponent<Tower>().m_targets.Remove(gameObject);
+            GameObject.Destroy(gameObject);
         }
     }
 
@@ -178,6 +185,11 @@ public class Enemy : MonoBehaviour
     private void OnDestroy()
     {
         EnemySpawner.m_alliveCount--;
+        for (int i = 0; i < amountOfTurds; i++)
+        {
+            Instantiate(turd, transform.position, Quaternion.identity);
+        }
+        
     }
 }
 
