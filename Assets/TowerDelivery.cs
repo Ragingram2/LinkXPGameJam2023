@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TowerDelivery : MonoBehaviour
 {
+    public int cost = 0;
     public GameObject m_tower;
     public Builder m_player;
 

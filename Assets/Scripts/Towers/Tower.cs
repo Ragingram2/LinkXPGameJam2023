@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-    [SerializeField] protected TowerData m_data;
+    [SerializeField] public TowerData m_data;
     [SerializeField] protected LayerMask m_targetMask;
     [SerializeField] protected GameObject m_bullet;
     [SerializeField] protected Transform m_gunTip;
@@ -51,9 +51,16 @@ public class Tower : MonoBehaviour
         m_curretTarget = obj.go;
     }
 
-    public void TakeDamage(int num)
+    public void TakeDamage(int num,GameObject owner)
     {
-        Debug.Log("Tower Taking Damage");
+        m_data.m_health -= num;
+        if (m_data.m_health <= 0)
+        {
+            owner.GetComponent<Enemy>().SwitchEnemyTarget(owner.GetComponent<Enemy>().finalTarget);
+            owner.GetComponent<Enemy>().agent.speed = owner.GetComponent<Enemy>().enemyData.speed;
+            owner.GetComponent<Enemy>().canSwitchTarget = true;
+            Destroy(gameObject);
+        }
     }
 
     protected (Vector3 pos, GameObject go) GetClosestEnemyPos()

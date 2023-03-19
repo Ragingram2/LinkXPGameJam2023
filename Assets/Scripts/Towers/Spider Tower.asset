@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 520165c10baac5448885a866f55230c0, type: 3}
   m_Name: Spider Tower
   m_EditorClassIdentifier: 
+  cost: 25
   m_fireRate: 1
   m_damage: 20
   m_range: 40

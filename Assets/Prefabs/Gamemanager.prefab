@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3293298401749700358
 MonoBehaviour:
@@ -63,7 +63,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Dev
+  m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &347374641997649880
@@ -92,13 +92,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_enemy: {fileID: 6038048078037013295, guid: 4d2589995ea6d3340bf859c9f2b1cf70, type: 3}
-  m_enemySets:
-  - {fileID: 11400000, guid: bf39959c4e015cb47ba0b12e3b8f4ea2, type: 2}
-  m_spawnRate: 2
-  m_waveTimeLength: 60
-  m_restTimeLength: 5
-  m_spawnLocAmountRange: {x: 5, y: 10}
-  m_spawnRadius: 18
+  m_restTimeLength: 20
+  m_spawnRadius: 20
+  m_waves:
+  - {fileID: 11400000, guid: 7044e9a62d85a6d4c8e663ce18f7e0e6, type: 2}
+  - {fileID: 11400000, guid: 3bee78b10223e5c4896cb4dbb0805744, type: 2}
+  - {fileID: 11400000, guid: b8d9b2f9da2b8d045aa716ef44a821b6, type: 2}
+  - {fileID: 11400000, guid: 44010af2a0c41f741bea4da9743dbc8f, type: 2}
+  - {fileID: 11400000, guid: 557d4544d2e836d4fb058dac595c2884, type: 2}
+  - {fileID: 11400000, guid: 5ed7664717db7454797cac162a99eab3, type: 2}
+  - {fileID: 11400000, guid: b79e6fbf5934f1a4db7e434ba34416b0, type: 2}
+  - {fileID: 11400000, guid: 3d86f5e90db52374dbcd702a34ba6565, type: 2}
+  - {fileID: 11400000, guid: 8af2a8cdf9220874ab54f70bccad8c9b, type: 2}
+  - {fileID: 11400000, guid: 86fb49309a672834aa7d70ece6b37570, type: 2}
 --- !u!114 &982240671831632120
 MonoBehaviour:
   m_ObjectHideFlags: 0

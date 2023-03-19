@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
 
     bool canAttack;
     public bool m_slowed = false;
+    public bool canSwitchTarget = true;
 
     public AudioSource attacking_audio;
     public AudioSource buzzing_audio;
@@ -33,7 +34,7 @@ public class Enemy : MonoBehaviour
     public Rigidbody body;
     GameObject target;
     Transform currentTarget;
-    Transform finalTarget;
+    public Transform finalTarget;
     public NavMeshAgent agent;
 
     public BoxCollider targetBoxCollider; //should be farm or wall collider
@@ -53,7 +54,7 @@ public class Enemy : MonoBehaviour
         finalTarget = target.transform;
 
         agent = GetComponent<NavMeshAgent>();
-        //agent.Warp(pos);
+        agent.Warp(pos);
         enemySphereCollider = GetComponent<SphereCollider>();
 
         targetBoxCollider = currentTarget.GetComponent<BoxCollider>();//when towers, capsule
@@ -80,7 +81,6 @@ public class Enemy : MonoBehaviour
         }
     private void Start()
     {
-        Initialize(enemyData, Vector3.zero);
         buzzing_audio.Play();
     }
 
@@ -107,26 +107,27 @@ public class Enemy : MonoBehaviour
         Tower temp;
         if (collision.gameObject.TryGetComponent<Tower>(out temp))
         {
-            temp.TakeDamage(enemyDamageDeal);
+            temp.TakeDamage(enemyDamageDeal, gameObject);
         }
     }
-
-    void OnTriggerStay(Collider collider)
-    {
-        Tower temp;
-        if (collider.gameObject.TryGetComponent<Tower>(out temp))
-        {
-            transform.LookAt(collider.transform.position);
-            agent.speed = 0f;
-            EnemyAttack();
-        }
-    }
-
 
     void DebugLog()
     {
         Debug.Log($"Enemy type {enemyName}: " + enemyDamageDeal);
     }
+
+
+
+    void DistanceChecker(Vector3 enemy, Vector3 tower)
+    {
+        float theDistance = Vector3.Distance(enemy, tower);
+        if (theDistance <= enemyAttackRadius)
+        {
+            agent.speed = 0f;
+            EnemyAttack();
+        }
+    }
+
 
     public void SwitchEnemyTarget(Transform pTarget)
     {
@@ -141,13 +142,21 @@ public class Enemy : MonoBehaviour
 
     public void EnemyTakeDamage(int _damageAmmount, GameObject bulletOwner)
     {
-        if (currentTarget.tag != "Tower")
+        if (canSwitchTarget)
         {
-            SwitchEnemyTarget(bulletOwner.transform);
-        }
-        enemyCurrentHealth -= _damageAmmount;
-        Debug.Log(enemyCurrentHealth);
+            if (bulletOwner != null)
+            {
+                SwitchEnemyTarget(bulletOwner.transform);
+                canSwitchTarget = false;
+            }
 
+            if (bulletOwner == null)
+            {
+                SwitchEnemyTarget(finalTarget);
+            }
+        }
+
+        enemyCurrentHealth -= _damageAmmount;
         if (enemyCurrentHealth <= 0)
         {
             bulletOwner.GetComponent<Tower>().m_targets.Remove(gameObject);
@@ -168,6 +177,10 @@ public class Enemy : MonoBehaviour
             var pos = currentTarget.position;
             pos.y = 0;
             agent.SetDestination(pos);
+            if (currentTarget.tag == "Tower")
+            {
+                DistanceChecker(gameObject.transform.position, currentTarget.transform.position);
+            }  
         }
         else
         {
@@ -183,10 +196,10 @@ public class Enemy : MonoBehaviour
     {
         Tower temp = currentTarget.gameObject.GetComponent<Tower>();
 
-        if (canAttack)
+        if (canAttack && temp != null)
         {
-            //enemy attack
-            temp.TakeDamage(enemyDamageDeal);
+            temp.TakeDamage(enemyDamageDeal,gameObject);
+            Debug.Log("attacked target");
             StartCoroutine(EnemyAttackCooldown(enemyAttackTime));
         }
     }
@@ -208,10 +221,7 @@ public class Enemy : MonoBehaviour
     private void OnDestroy()
     {
         EnemySpawner.m_alliveCount--;
-        
-        
+
+
     }
 }
-
-//2. Enemy attack - time between attacks, type of attack etc.
-//3. Switch enemy target - if attacked, change target to it, if there's no target, change it back to farm

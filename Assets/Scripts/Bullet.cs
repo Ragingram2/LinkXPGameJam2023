@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -14,5 +15,18 @@ public class Bullet : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    void ParentAliveCheck()
+    {
+        if (owner == null)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void LateUpdate()
+    {
+        ParentAliveCheck();
     }
 }

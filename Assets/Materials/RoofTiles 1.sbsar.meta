@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 3acbae189492cbb4983ed6eb913a5749
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: dda12f74ff9116a42b23482252b2c482, type: 3}
+  _instancesCopy: []
+  _fileAsset: {instanceID: 0}
+  _assetPath: Assets/Materials/RoofTiles 1.sbsar
