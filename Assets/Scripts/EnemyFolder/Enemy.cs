@@ -16,42 +16,42 @@ public class Enemy : MonoBehaviour
     int enemyMaxHealth;
 
     float enemySpeed;
-    public float radiusMultiply;
 
     int enemyDamageDeal;
 
     float enemyAttackTime;
+    float enemyAttackRadius;
 
-    int enemyRadiusMultiply;
+    bool canAttack;
 
-    //public Rigidbody body;
+    public Rigidbody body;
     GameObject target;
+    Transform currentTarget;
     Transform finalTarget;
     public NavMeshAgent agent;
     public CapsuleCollider capsuleCollider;
 
     public BoxCollider targetBoxCollider; //should be farm or wall collider
-    public SphereCollider enemySphereCollider;
-
-    float timerLenght = 5.0f;
-    float timeGoing;
-    bool startedCountdown = false;
-
-    void Start()
+    public SphereCollider enemySphereCollider;  
+    
+    public void initialize(EnemyData data)
     {
-        target = GameObject.Find("TestTarget");
+        enemyData = data;
+
+        target = GameObject.Find("Core");
+        currentTarget = target.transform;
         finalTarget = target.transform;
 
         agent = GetComponent<NavMeshAgent>();
         capsuleCollider = GetComponent<CapsuleCollider>();
         enemySphereCollider = GetComponent<SphereCollider>();
 
-        targetBoxCollider = finalTarget.GetComponent<BoxCollider>();
+        targetBoxCollider = currentTarget.GetComponent<BoxCollider>();//when towers, capsule
 
         enemyName = enemyData.name;
         enemyDescription = enemyData.description;
 
-        enemyMaxHealth = enemyData.health;
+        enemyMaxHealth = enemyData.maxHealth;
         enemyCurrentHealth = enemyMaxHealth;
 
         enemySpeed = enemyData.speed;
@@ -61,6 +61,9 @@ public class Enemy : MonoBehaviour
 
         enemyAttackTime = enemyData.attackTime;
 
+        enemyAttackRadius = enemyData.attackRadius;
+        enemySphereCollider.radius = enemyAttackRadius;
+
         DebugLog();
     }
 
@@ -69,50 +72,30 @@ public class Enemy : MonoBehaviour
         EnemyMove();
     }
 
-    private void LateUpdate()
-    {
-        if (startedCountdown)
-        {
-            timeGoing += Time.deltaTime;
-            Debug.Log(timeGoing);
-            if (timeGoing > timerLenght)
-            {
-                timeGoing = 0;
-                startedCountdown = false;
-                SwitchEnemyTarget(finalTarget);
-                Debug.Log("Timer expired");
-                //agent.speed = enemySpeed;
-            }
-        }
-    }
-
     private void OnCollisionStay(Collision collision)
     {
         Tower temp;
         if (collision.gameObject.TryGetComponent<Tower>(out temp))
         {
-            //call tower take damage
+            temp.TakeDamage(enemyDamageDeal);
+            //deal damage to tower with enemyDamageDeal variable?
         }
     }
 
-
-    void OnTriggerEnter(Collider collider)
+    void OnTriggerStay(Collider collider)
     {
-        
-        if (collider.gameObject.name == "AttackTarget")
+        Tower temp;
+        if (collider.gameObject.TryGetComponent<Tower>(out temp) && currentTarget.name == "Tower")
         {
-            SwitchEnemyTarget(collider.gameObject.transform);
-            startedCountdown = true;
-            Debug.Log(startedCountdown);
-            Debug.Log($"Ran into this thing: {collider.gameObject.name}");
-        }
-
-        if (collider.gameObject.name == target.name)
-        {           
+            transform.LookAt(collider.transform.position);
             agent.speed = 0f;
             EnemyAttack();
-            Debug.Log($"Enemy type {enemyName} speed is: " + agent.speed);
-            Debug.Log($"Collider name: {collider.name}");
+        }
+        else if (collider.gameObject.name == "AttackTarget")
+        {
+            transform.LookAt(collider.transform.position);
+            agent.speed = 0f;
+            EnemyAttack();
         }
     }  
 
@@ -121,47 +104,68 @@ public class Enemy : MonoBehaviour
         Debug.Log( $"Enemy type {enemyName}: " + enemyDamageDeal);
     }
 
-
     //If attacked by tower, it targets it, and when it gets within range, it attacks
     public void SwitchEnemyTarget(Transform pTarget)
     {
         Debug.Log($"Should've switched target to {pTarget.name}");
-        finalTarget = pTarget;
-        agent.speed = enemySpeed;
-
-
-        //target = FindObjectOfType < house or wall or whatever > ();
-        //priority: highest damage
-        //Needs sphere collider for triggers
+        currentTarget = pTarget;
+        if (currentTarget == null)
+        {
+            Debug.Log("There's no target");
+            currentTarget = finalTarget;
+        }
     }
 
-    public void EnemyTakesDamage(int _damageAmmount)
+    public void EnemyTakeDamage(int _damageAmmount)
     {
-        enemyCurrentHealth -= _damageAmmount;
-    }
+        GameObject temp = this.gameObject;
 
+        SwitchEnemyTarget(currentTarget);
+
+        enemyCurrentHealth -= _damageAmmount;
+
+        if (enemyCurrentHealth <= 0)
+        {
+            GameObject.Destroy(temp);
+            Debug.Log("Enemy is dead");
+        }
+    }
 
     protected virtual void EnemyMove()
     {
         if (target != null)
         {
-
-            var pos = finalTarget.position;
+            var pos = currentTarget.position;
             pos.y = 0;
             agent.SetDestination(pos);
+        }
+        else
+        {
+            Debug.Log("There is no target");
+            currentTarget = finalTarget;
         }
 
         //^This will be replaced by farm house and the farm house radius
     }
+
     protected virtual void EnemyAttack()
     {
-        //If sphere collider is trigger colliding with wall or base - attack
-        Debug.Log("Attacked target");
-    }    
+        Tower temp = currentTarget.gameObject.GetComponent<Tower>();
+        
+        if (canAttack)
+        {
+            temp.TakeDamage(enemyDamageDeal);
+            EnemyAttackCooldown(enemyAttackTime);
+        }
+    }
+
+    protected IEnumerator EnemyAttackCooldown(float seconds)
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(seconds);
+        canAttack = true;
+    }
 }
 
-
-//1. If the enemy is colliding(it's box collision) with anything that's a tower, it deals damage
 //2. Enemy attack - time between attacks, type of attack etc.
 //3. Switch enemy target - if attacked, change target to it, if there's no target, change it back to farm
-//4. Enemy move is using navmesh - setdestinantion

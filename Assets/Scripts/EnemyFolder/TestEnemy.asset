@@ -15,8 +15,8 @@ MonoBehaviour:
   name: EnemyTest
   description: Does something
   model: {fileID: 0}
-  health: 100
-  speed: 0
-  damageDeal: 1
-  attackTime: 0
-  radiusMultiply: 0
+  maxHealth: 111
+  speed: 1
+  damageDeal: 11
+  attackTime: 11
+  attackRadius: 2

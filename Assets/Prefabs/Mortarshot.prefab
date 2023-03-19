@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 3095812929478671906}
   - component: {fileID: 3073039821669817290}
   - component: {fileID: 8269096559252892464}
-  - component: {fileID: 6142393032614559160}
-  m_Layer: 0
+  - component: {fileID: 2511425052686053060}
+  m_Layer: 2
   m_Name: Mortarshot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,7 +115,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5839374838096806620}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 2
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -134,7 +134,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6142393032614559160
+--- !u!114 &2511425052686053060
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,6 +143,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5839374838096806620}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 724d6bb5201b9c14db37ddc35c5f796c, type: 3}
+  m_Script: {fileID: 11500000, guid: b4f48d526eb17ee4aa0645f16ef7fb09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_explosion: {fileID: 4006697907797399323, guid: 02a9c9c187401f848b85763a72ca86a7,
+    type: 3}
+  m_attackType: 0
+  m_hitmask:
+    serializedVersion: 2
+    m_Bits: 192
+  m_blastRadius: 5

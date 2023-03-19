@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.2257134, b: 0.30692226, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 28169045}
   - component: {fileID: 28169049}
   - component: {fileID: 28169051}
+  - component: {fileID: 28169052}
   m_Layer: 6
   m_Name: EnemyType1
   m_TagString: Untagged
@@ -245,7 +246,7 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: e263e1e3c33d77840a294c0478b0fc10, type: 2}
   enemyName: 
   enemyDescription: 
-  radiusMultiply: 5
+  body: {fileID: 0}
   agent: {fileID: 28169051}
   capsuleCollider: {fileID: 0}
   targetBoxCollider: {fileID: 0}
@@ -272,6 +273,27 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!135 &28169052
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28169044}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &297263444
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,6 +677,7 @@ GameObject:
   - component: {fileID: 892548428}
   - component: {fileID: 892548432}
   - component: {fileID: 892548434}
+  - component: {fileID: 892548435}
   m_Layer: 6
   m_Name: EnemyType4
   m_TagString: Untagged
@@ -763,7 +786,7 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: cde89b49c623bc04fad32dc2cf326b46, type: 2}
   enemyName: 
   enemyDescription: 
-  radiusMultiply: 5
+  body: {fileID: 0}
   agent: {fileID: 892548434}
   capsuleCollider: {fileID: 0}
   targetBoxCollider: {fileID: 0}
@@ -790,6 +813,27 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!135 &892548435
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 892548427}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &914267054
 GameObject:
   m_ObjectHideFlags: 0
@@ -804,6 +848,7 @@ GameObject:
   - component: {fileID: 914267055}
   - component: {fileID: 914267059}
   - component: {fileID: 914267061}
+  - component: {fileID: 914267062}
   m_Layer: 6
   m_Name: EnemyType3
   m_TagString: Untagged
@@ -912,7 +957,7 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: ac5f84f8bcd2f744497bc2d181f2552c, type: 2}
   enemyName: 
   enemyDescription: 
-  radiusMultiply: 5
+  body: {fileID: 0}
   agent: {fileID: 914267061}
   capsuleCollider: {fileID: 0}
   targetBoxCollider: {fileID: 0}
@@ -939,6 +984,27 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!135 &914267062
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 914267054}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1288769316
 GameObject:
   m_ObjectHideFlags: 0
@@ -1075,6 +1141,79 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!1001 &1334445766
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4006675608560239174, guid: 58644ac0b184cbf47b11f8f832866564,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 4006675608560239174, guid: 58644ac0b184cbf47b11f8f832866564,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4006675608560239174, guid: 58644ac0b184cbf47b11f8f832866564,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.231
+      objectReference: {fileID: 0}
+    - target: {fileID: 4006675608560239174, guid: 58644ac0b184cbf47b11f8f832866564,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -6.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 4006675608560239174, guid: 58644ac0b184cbf47b11f8f832866564,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4006675608560239174, guid: 58644ac0b184cbf47b11f8f832866564,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4006675608560239174, guid: 58644ac0b184cbf47b11f8f832866564,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4006675608560239174, guid: 58644ac0b184cbf47b11f8f832866564,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4006675608560239174, guid: 58644ac0b184cbf47b11f8f832866564,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4006675608560239174, guid: 58644ac0b184cbf47b11f8f832866564,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4006675608560239174, guid: 58644ac0b184cbf47b11f8f832866564,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4226136409204672637, guid: 58644ac0b184cbf47b11f8f832866564,
+        type: 3}
+      propertyPath: m_Name
+      value: Ant Tower
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 58644ac0b184cbf47b11f8f832866564, type: 3}
 --- !u!1 &1337151376
 GameObject:
   m_ObjectHideFlags: 0
@@ -1421,6 +1560,7 @@ GameObject:
   - component: {fileID: 1465008398}
   - component: {fileID: 1465008402}
   - component: {fileID: 1465008404}
+  - component: {fileID: 1465008405}
   m_Layer: 6
   m_Name: TestEnemy
   m_TagString: Untagged
@@ -1529,7 +1669,7 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: 1a61a00505e9f4d45ab7d1cb62646d34, type: 2}
   enemyName: 
   enemyDescription: 
-  radiusMultiply: 5
+  body: {fileID: 0}
   agent: {fileID: 1465008404}
   capsuleCollider: {fileID: 0}
   targetBoxCollider: {fileID: 0}
@@ -1556,6 +1696,27 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!135 &1465008405
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465008397}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1475857198
 GameObject:
   m_ObjectHideFlags: 0
@@ -1655,11 +1816,11 @@ BoxCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -1743,7 +1904,7 @@ MonoBehaviour:
   enemyData: {fileID: 11400000, guid: 0b58e24c3543ecd439208dad6046c2da, type: 2}
   enemyName: 
   enemyDescription: 
-  radiusMultiply: 10
+  body: {fileID: 0}
   agent: {fileID: 2000164799}
   capsuleCollider: {fileID: 0}
   targetBoxCollider: {fileID: 0}
@@ -1780,16 +1941,16 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 5
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &2000164801
 Rigidbody:
@@ -1836,7 +1997,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!64 &2104175411
 MeshCollider:

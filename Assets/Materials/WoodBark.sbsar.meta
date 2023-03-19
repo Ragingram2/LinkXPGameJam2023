@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5d6c1ee5ba967924e9b48e08b1262daf
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: dda12f74ff9116a42b23482252b2c482, type: 3}
+  _instancesCopy:
+  - {fileID: 11400000, guid: 2c518782de4042b4e89400feb4f76dff, type: 2}
+  _fileAsset: {fileID: 6013892654665635331, guid: 5d6c1ee5ba967924e9b48e08b1262daf,
+    type: 3}
+  _assetPath: Assets/Materials/WoodBark.sbsar
