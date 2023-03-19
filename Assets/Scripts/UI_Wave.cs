@@ -1,20 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 
-public class MoneyAdd : MonoBehaviour
+public class UI_Wave : MonoBehaviour
 {
-    public int wave = 0;
-    [SerializeField] public TMP_Text waveText;
-    [SerializeField] public TMP_Text currencyText;
-    bool waveChanged = false;
 
-    private void Update()
+    // Start is called before the first frame update
+    void Start()
     {
-        wave = EnemySpawner.m_waveCount;
-        waveText.text = "Wave:" + wave;
+        
+    }
 
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }

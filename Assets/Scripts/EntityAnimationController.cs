@@ -24,4 +24,9 @@ public class EntityAnimationController : MonoBehaviour
         animator.SetBool("vertical", vertical);
         animator.SetFloat("speed", Mathf.Sqrt(sqrMag) * (vertical ? Mathf.Sign(velocity.y) : Mathf.Sign(velocity.x)));
     }
+
+    private void Update()
+    {
+        transform.rotation = Quaternion.identity;
+    }
 }

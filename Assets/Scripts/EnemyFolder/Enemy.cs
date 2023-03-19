@@ -22,15 +22,19 @@ public class Enemy : MonoBehaviour
     float enemyAttackTime;
     float enemyAttackRadius;
 
-    bool canAttack = true;
-    public bool canSwitchTarget = true;
+    bool canAttack;
+    public bool m_slowed = false;
+
+    public AudioSource attacking_audio;
+    public AudioSource buzzing_audio;
+
+    
 
     public Rigidbody body;
     GameObject target;
     Transform currentTarget;
     public Transform finalTarget;
     public NavMeshAgent agent;
-    public CapsuleCollider capsuleCollider;
 
     public BoxCollider targetBoxCollider; //should be farm or wall collider
     public SphereCollider enemySphereCollider;
@@ -38,6 +42,8 @@ public class Enemy : MonoBehaviour
     public GameObject turd;
     public int amountOfTurds;
 
+    public EntityAnimationController entityAnimationController;
+    
     public void Initialize(EnemyData data, Vector3 pos)
     {
         enemyData = data;
@@ -48,7 +54,6 @@ public class Enemy : MonoBehaviour
 
         agent = GetComponent<NavMeshAgent>();
         //agent.Warp(pos);
-        capsuleCollider = GetComponent<CapsuleCollider>();
         enemySphereCollider = GetComponent<SphereCollider>();
 
         targetBoxCollider = currentTarget.GetComponent<BoxCollider>();//when towers, capsule
@@ -69,17 +74,24 @@ public class Enemy : MonoBehaviour
         enemyAttackRadius = enemyData.attackRadius;
         enemySphereCollider.radius = enemyAttackRadius;
 
-        DebugLog();
-    }
+        entityAnimationController.GetComponent<Animator>().runtimeAnimatorController = enemyData.controller;
 
+        DebugLog();
+        }
     private void Start()
     {
         Initialize(enemyData, Vector3.zero);
+        buzzing_audio.Play();
     }
 
     void Update()
     {
         EnemyMove();
+
+        if (m_slowed)
+            agent.speed = enemySpeed * .1f;
+        else
+            agent.speed = enemySpeed;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -175,6 +187,9 @@ public class Enemy : MonoBehaviour
             Debug.Log("There is no target");
             currentTarget = finalTarget;
         }
+
+        Vector3 movement = agent.velocity;
+        entityAnimationController.SetVelocity(new Vector2(movement.x, movement.z));
     }
 
     protected virtual void EnemyAttack()
@@ -194,6 +209,13 @@ public class Enemy : MonoBehaviour
         canAttack = false;
         yield return new WaitForSeconds(seconds);
         canAttack = true;
+    }
+
+    public IEnumerator SlowdownEffect(float seconds)
+    {
+        m_slowed = true;
+        yield return new WaitForSeconds(seconds);
+        m_slowed = false;
     }
 
     private void OnDestroy()

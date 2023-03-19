@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-    [SerializeField] protected TowerData m_data;
+    [SerializeField] public TowerData m_data;
     [SerializeField] protected LayerMask m_targetMask;
     [SerializeField] protected GameObject m_bullet;
     [SerializeField] protected Transform m_gunTip;
