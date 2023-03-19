@@ -32,6 +32,7 @@ public class SpiderTower : Tower
         Vector2 dir;
         dir.x = targetPos.x - m_gunTip.position.x;
         dir.y = targetPos.z - m_gunTip.position.z;
+        Debug.Log(dir);
         float x = dir.magnitude;
         float y = -m_gunTip.position.y;
         dir /= x;
@@ -46,7 +47,7 @@ public class SpiderTower : Tower
         float sinTheta = cosTheta * tanTheta;
 
         launchVel = new Vector3(s * cosTheta * dir.x, s * sinTheta, s * cosTheta * dir.y) * launchSpeed * 1000f;
-        Debug.Log(launchVel);
+        //Debug.Log(launchVel);
         if (m_canAttack)
         {
             var go = Instantiate(m_bullet, m_gunTip.transform.position + transform.forward, Quaternion.identity);
