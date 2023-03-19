@@ -25,6 +25,11 @@ public class Enemy : MonoBehaviour
     bool canAttack;
     public bool m_slowed = false;
 
+    public AudioSource attacking_audio;
+    public AudioSource buzzing_audio;
+
+    
+
     public Rigidbody body;
     GameObject target;
     Transform currentTarget;
@@ -72,6 +77,11 @@ public class Enemy : MonoBehaviour
         entityAnimationController.GetComponent<Animator>().runtimeAnimatorController = enemyData.controller;
 
         DebugLog();
+        }
+    private void Start()
+    {
+        Initialize(enemyData, Vector3.zero);
+        buzzing_audio.Play();
     }
 
     void Update()
@@ -175,6 +185,7 @@ public class Enemy : MonoBehaviour
 
         if (canAttack)
         {
+            //enemy attack
             temp.TakeDamage(enemyDamageDeal);
             StartCoroutine(EnemyAttackCooldown(enemyAttackTime));
         }

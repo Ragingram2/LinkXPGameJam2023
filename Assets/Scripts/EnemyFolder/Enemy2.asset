@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: '"Spider"'
   description: Should be a SPIDER
-  controller: {fileID: 9100000, guid: 5cc825a35fea9724f8c22fb7aab6cc1d, type: 2}
-  maxHealth: 100
+  controller: {fileID: 9100000, guid: cff32e2222df9fe4da00f7dd50039ce6, type: 2}
+  maxHealth: 155
   speed: 2
-  damageDeal: 2
-  attackTime: 5
+  damageDeal: 25
+  attackTime: 2
   attackRadius: 3
