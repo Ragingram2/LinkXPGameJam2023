@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8269096559252892464}
   - component: {fileID: 2511425052686053060}
   m_Layer: 2
-  m_Name: Mortarshot
+  m_Name: SlowShot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void OnFire(InputAction val)
+    void OnBuild(InputAction val)
     {
         if (val.IsPressed())
         {
