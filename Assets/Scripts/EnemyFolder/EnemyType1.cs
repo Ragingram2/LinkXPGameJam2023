@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class EnemyType1 : Enemy
 {
+    
 
+    protected override void EnemyAttack()
+    {
+        base.EnemyAttack();
+
+    }
 
 }
