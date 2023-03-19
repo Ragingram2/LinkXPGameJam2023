@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEditor.PlayerSettings;
+using static UnityEngine.Rendering.VolumeComponent;
 using static UnityEngine.UI.Image;
 
 public struct GridItem
@@ -64,6 +66,8 @@ public class PlacementGrid : MonoBehaviour
         totalSize = itemWidth * new Vector2(size.x, size.y);
         origin = new Vector2(position.x, position.z) - totalSize * 0.5f;
 
+        Debug.Log($"Found {ExcludeBuild.exclusionZones.Count} exclusion zones");
+
         foreach (ExcludeBuild exclusionZone in ExcludeBuild.exclusionZones)
         {
             FillRange(exclusionZone.transform.localToWorldMatrix, exclusionZone.bounds, exclusionZone.gameObject);
@@ -81,8 +85,15 @@ public class PlacementGrid : MonoBehaviour
     {
         Vector2 relativePos = pos - origin;
         Vector2Int index = new Vector2Int();
-        index.x = Mathf.RoundToInt(relativePos.x / itemWidth);
         index.y = Mathf.RoundToInt(relativePos.y / itemWidth);
+
+        if (hexagonal)
+        {
+            relativePos.x -= 0.5f * itemWidth * (index.y % 2);
+        }
+
+        index.x = Mathf.RoundToInt(relativePos.x / itemWidth);
+
         return index;
     }
 
@@ -107,6 +118,25 @@ public class PlacementGrid : MonoBehaviour
         }
 
         return null;
+    }
+
+    public Vector3 GetCenter(Vector3 pos)
+    {
+        return GetCenter(GetIndex(pos));
+    }
+
+    public Vector3 GetCenter(Vector2 pos)
+    {
+        return GetCenter(GetIndex(pos));
+    }
+
+    public Vector3 GetCenter(Vector2Int index)
+    {
+        if (hexagonal)
+        {
+            return new Vector3(origin.x + index.x * itemWidth + 0.5f * itemWidth * (index.y % 2), transform.position.y, origin.y + index.y * itemWidth);
+        }
+        return new Vector3(origin.x + index.x * itemWidth, transform.position.y, origin.y + index.y * itemWidth);
     }
 
     public void FillItem(Vector3 pos, GameObject gameObject)
