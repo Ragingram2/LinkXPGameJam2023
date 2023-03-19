@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Wave 1
   m_EditorClassIdentifier: 
   enemySet: {fileID: 11400000, guid: 0a4754e333d86ac4aa16f19b014eabe7, type: 2}
-  spawnRate: 0.5
+  spawnRate: 2
   waveTimeLength: 15
   spawnLocAmountRange: {x: 1, y: 2}
   maxEnemies: 3
