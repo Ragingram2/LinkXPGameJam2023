@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 m_movement;
     private Builder m_builder;
     private Camera m_mainCamera;
+    public AudioSource audio_walking;
 
     public int money;
 
@@ -33,6 +34,20 @@ public class PlayerController : MonoBehaviour
         {
             m_direction = (m_hit.point - transform.position).normalized * 0.8f;
         }
+
+        if (m_movement.magnitude > 0)
+        {
+            if (!audio_walking.isPlaying)
+            {
+                audio_walking.Play();
+                Debug.Log("Moving");
+            }
+        }
+        else if (m_movement.magnitude == 0 && audio_walking.isPlaying)
+        {
+            audio_walking.Stop();
+            Debug.Log("Stop Moving");
+        }
     }
 
     void OnFire(InputAction val)
@@ -47,6 +62,7 @@ public class PlayerController : MonoBehaviour
     {
         m_movement = val.ReadValue<Vector2>();
         animationController.SetVelocity(m_movement);
+
     }
 
     private void OnCollisionEnter(Collision collision)
