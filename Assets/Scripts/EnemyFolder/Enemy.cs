@@ -42,7 +42,7 @@ public class Enemy : MonoBehaviour
     {
         enemyData = data;
 
-        target = GameObject.Find("TestTarget");
+        target = GameObject.Find("Core");
         currentTarget = target.transform;
         finalTarget = target.transform;
 

@@ -77,6 +77,8 @@ public class EnemySpawner : MonoBehaviour
             var enemySet = m_currentWave.enemySet;
             foreach (var pos in m_spawnPositions)
             {
+                if (m_enemyCount > m_currentWave.maxEnemies)
+                    break;
                 var rand = Random.Range(0, enemySet.m_enemies.Count);
                 var go = Instantiate(m_enemy, pos, Quaternion.identity);
                 go.GetComponent<Enemy>().Initialize(enemySet.m_enemies[rand], pos);
