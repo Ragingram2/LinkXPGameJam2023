@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 63048cc82bd08f448b4a0d7e96f4ec32
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: dda12f74ff9116a42b23482252b2c482, type: 3}
+  _instancesCopy: []
+  _fileAsset: {instanceID: 0}
+  _assetPath: Assets/Materials/Grass 1.sbsar
