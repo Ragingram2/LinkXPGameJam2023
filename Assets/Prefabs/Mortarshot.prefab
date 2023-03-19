@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3073039821669817290}
   - component: {fileID: 8269096559252892464}
   - component: {fileID: 6142393032614559160}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Mortarshot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
