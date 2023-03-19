@@ -21,6 +21,8 @@ public class PlacementGrid : MonoBehaviour
     public float itemWidth;
     public bool hexagonal;
 
+    public float yScaleHex = 0.5f / Mathf.Tan(Mathf.Deg2Rad * 30f);
+
     public LayerMask groundMask;
 
     private GridItem[,] grid;
@@ -38,6 +40,7 @@ public class PlacementGrid : MonoBehaviour
 
     private void OnValidate()
     {
+        yScaleHex = 0.5f / Mathf.Tan(Mathf.Deg2Rad * 30f);
         RecalculateGrid();
     }
 
@@ -55,7 +58,7 @@ public class PlacementGrid : MonoBehaviour
         {
             for (int y = 0; y < size.y; y++)
             {
-                Vector3 pos = new Vector3(origin.x + x * itemWidth, 50f, origin.y + y * itemWidth);
+                Vector3 pos = GetCenter(new Vector2Int(x, y)) + Vector3.up * 50f;
                 Debug.DrawRay(pos, Vector3.down);
                 RaycastHit m_hit;
                 grid[x, y] = new GridItem(null, Physics.Raycast(new Ray(pos, Vector3.down), out m_hit, 100, groundMask));
@@ -63,7 +66,7 @@ public class PlacementGrid : MonoBehaviour
         }
 
         Vector3 position = transform.position;
-        totalSize = itemWidth * new Vector2(size.x, size.y);
+        totalSize = new Vector2(itemWidth * size.x, size.y * (hexagonal ? itemWidth * yScaleHex : itemWidth));
         origin = new Vector2(position.x, position.z) - totalSize * 0.5f;
 
         Debug.Log($"Found {ExcludeBuild.exclusionZones.Count} exclusion zones");
@@ -89,6 +92,7 @@ public class PlacementGrid : MonoBehaviour
 
         if (hexagonal)
         {
+            index.y = Mathf.RoundToInt(relativePos.y / (itemWidth * yScaleHex));
             relativePos.x -= 0.5f * itemWidth * (index.y % 2);
         }
 
@@ -134,7 +138,7 @@ public class PlacementGrid : MonoBehaviour
     {
         if (hexagonal)
         {
-            return new Vector3(origin.x + index.x * itemWidth + 0.5f * itemWidth * (index.y % 2), transform.position.y, origin.y + index.y * itemWidth);
+            return new Vector3(origin.x + index.x * itemWidth + 0.5f * itemWidth * (index.y % 2), transform.position.y, origin.y + index.y * itemWidth * yScaleHex);
         }
         return new Vector3(origin.x + index.x * itemWidth, transform.position.y, origin.y + index.y * itemWidth);
     }
@@ -192,6 +196,15 @@ public class PlacementGrid : MonoBehaviour
     {
         if (!showGrid) return;
 
+        Vector2Int underMouse = new Vector2Int(-1, -1);
+
+        Ray ray = Camera.current.ScreenPointToRay(Input.mousePosition);
+        RaycastHit m_hit;
+        if (Physics.Raycast(ray, out m_hit, 100))
+        {
+            underMouse = GetIndex(m_hit.point);
+        }
+
         float height = transform.position.y;
 
         for (int x = 0; x < size.x; x++)
@@ -208,9 +221,15 @@ public class PlacementGrid : MonoBehaviour
                 if (hexagonal)
                 {
                     pos.x += 0.5f * itemWidth * (y % 2);
+                    pos.y = origin.y + y * itemWidth * yScaleHex;
                 }
 
                 Gizmos.color = grid[x, y].owner == null ? new Color(0f, 1f, 0f, 0.25f) : new Color(1f, 0f, 0f, 0.25f);
+
+                if(x == underMouse.x && y == underMouse.y)
+                {
+                    Gizmos.color = Color.blue;
+                }
 
                 Gizmos.DrawSphere(new Vector3(pos.x, height, pos.y), itemWidth * 0.5f);
             }

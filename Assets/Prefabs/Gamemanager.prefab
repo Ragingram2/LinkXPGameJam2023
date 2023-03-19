@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3293298401749700358}
   - component: {fileID: 347374641997649880}
   - component: {fileID: 810009882360807534}
+  - component: {fileID: 982240671831632120}
   m_Layer: 0
   m_Name: Gamemanager
   m_TagString: Untagged
@@ -93,3 +94,23 @@ MonoBehaviour:
   m_enemySets: []
   m_spawnLocAmountRange: {x: 5, y: 10}
   m_spawnRadius: 25
+--- !u!114 &982240671831632120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5429360138549090075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb994d8c7e2bc04ba46921d81e508bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  size: {x: 100, y: 200}
+  itemWidth: 0.6
+  hexagonal: 1
+  yScaleHex: 0.86602545
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 256
+  showGrid: 0

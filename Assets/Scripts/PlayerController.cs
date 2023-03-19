@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
         RaycastHit m_hit;
         if (Physics.Raycast(ray, out m_hit, 100, m_hitMask))
         {
-            m_direction = m_builder.GetGridPos(m_hit.point - transform.position).normalized;
+            m_direction = (m_hit.point - transform.position).normalized * 0.8f;
         }
     }
 
@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
     {
         if (val.IsPressed())
         {
-            m_builder.BuildOnGrid(transform.position + m_direction * PlacementGrid.instance.itemWidth);
+            m_builder.BuildOnGrid(PlacementGrid.instance.GetCenter(transform.position) + m_direction * PlacementGrid.instance.itemWidth);
         }
     }
 
