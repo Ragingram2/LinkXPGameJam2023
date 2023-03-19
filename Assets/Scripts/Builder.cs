@@ -19,6 +19,7 @@ public class Builder : MonoBehaviour
     private void Update()
     {
         m_highlighter.transform.position = GetGridPos(PlacementGrid.instance.GetCenter(m_player.transform.position) + (m_player.m_direction * PlacementGrid.instance.itemWidth));
+        m_highlighter.GetComponent<MeshRenderer>().material.SetInt("_Available", PlacementGrid.instance.GetObject(m_highlighter.transform.position) == null ? 1 : 0);
     }
 
     public GameObject BuildOnGrid(Vector3 pos)
