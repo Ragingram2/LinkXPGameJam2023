@@ -6,6 +6,7 @@ using UnityEngine;
 public class BuyButton : MonoBehaviour
 {
     public int cost;
+    public UI m_ui;
 
     [SerializeField] public TMP_Text buttonText;
 
@@ -19,6 +20,6 @@ public class BuyButton : MonoBehaviour
 
     public void OnClicked()
     {
-        UI.blob -= cost;
+        m_ui.blob -= cost;
     }
 }
