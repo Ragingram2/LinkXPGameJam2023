@@ -25,7 +25,9 @@ public class Tower : MonoBehaviour
     {
         if ((m_targetMask & (1 << other.gameObject.layer)) != 0)
         {
-            m_targets.Add(other.gameObject);
+            Debug.Log($"Target Entered {other.name}");
+            if (!m_targets.Contains(other.gameObject))
+                m_targets.Add(other.gameObject);
         }
     }
 
@@ -33,6 +35,7 @@ public class Tower : MonoBehaviour
     {
         if (m_targets.Contains(other.gameObject))
         {
+            Debug.Log($"Target Left {other.name}");
             m_targets.Remove(other.gameObject);
         }
     }
@@ -50,7 +53,7 @@ public class Tower : MonoBehaviour
 
     public void TakeDamage(int num)
     {
-        Debug.Log("Tower Takig Damage");
+        Debug.Log("Tower Taking Damage");
     }
 
     protected (Vector3 pos, GameObject go) GetClosestEnemyPos()
