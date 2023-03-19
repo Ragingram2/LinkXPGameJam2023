@@ -27,6 +27,7 @@ public class AntTower : Tower
             var go = Instantiate(m_bullet, m_gunTip.position, Quaternion.identity);
             go.transform.LookAt(hit.transform);
             go.GetComponent<Rigidbody>().AddForce(transform.forward * 5f, ForceMode.Impulse);
+            go.GetComponent<Bullet>().owner = gameObject;
             StartCoroutine(ShotCooldown(m_data.m_fireRate));
         }
     }
