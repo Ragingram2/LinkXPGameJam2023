@@ -28,6 +28,7 @@ public class Builder : MonoBehaviour
         var g_pos = GetGridPos(pos);
         if (PlacementGrid.instance.GetObject(g_pos) == null)
         {
+            PlayerController.money -= m_towerPrefab.GetComponent<Tower>().m_data.cost;
             var go = Instantiate(m_towerPrefab, g_pos, Quaternion.identity);
             PlacementGrid.instance.FillItem(g_pos, go);
             audio_building.Play();
@@ -40,7 +41,7 @@ public class Builder : MonoBehaviour
     {
         var g_pos = GetGridPos(pos);
         return GetTower(g_pos);
-        
+
     }
 
     public GameObject GetTower(Vector2 key)
