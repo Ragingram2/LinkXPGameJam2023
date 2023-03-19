@@ -23,33 +23,32 @@ public class Enemy : MonoBehaviour
     float enemyAttackRadius;
 
     bool canAttack;
-
-    
+    public bool m_slowed = false;
 
     public Rigidbody body;
     GameObject target;
     Transform currentTarget;
     Transform finalTarget;
     public NavMeshAgent agent;
-    public CapsuleCollider capsuleCollider;
 
     public BoxCollider targetBoxCollider; //should be farm or wall collider
     public SphereCollider enemySphereCollider;
 
     public GameObject turd;
     public int amountOfTurds;
+
+    public EntityAnimationController entityAnimationController;
     
     public void Initialize(EnemyData data, Vector3 pos)
     {
         enemyData = data;
 
-        target = GameObject.Find("TestTarget");
+        target = GameObject.Find("Core");
         currentTarget = target.transform;
         finalTarget = target.transform;
 
         agent = GetComponent<NavMeshAgent>();
         //agent.Warp(pos);
-        capsuleCollider = GetComponent<CapsuleCollider>();
         enemySphereCollider = GetComponent<SphereCollider>();
 
         targetBoxCollider = currentTarget.GetComponent<BoxCollider>();//when towers, capsule
@@ -61,7 +60,7 @@ public class Enemy : MonoBehaviour
         enemyCurrentHealth = enemyMaxHealth;
 
         enemySpeed = enemyData.speed;
-        agent.speed = enemySpeed; 
+        agent.speed = enemySpeed;
 
         enemyDamageDeal = enemyData.damageDeal;
 
@@ -70,22 +69,24 @@ public class Enemy : MonoBehaviour
         enemyAttackRadius = enemyData.attackRadius;
         enemySphereCollider.radius = enemyAttackRadius;
 
-        DebugLog();
-    }
+        entityAnimationController.GetComponent<Animator>().runtimeAnimatorController = enemyData.controller;
 
-    private void Start()
-    {
-        Initialize(enemyData, Vector3.zero);
+        DebugLog();
     }
 
     void Update()
     {
         EnemyMove();
+
+        if (m_slowed)
+            agent.speed = enemySpeed * .1f;
+        else
+            agent.speed = enemySpeed;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.name.Equals("Core"))
+        if (collision.gameObject.name.Equals("Core"))
         {
             Destroy(gameObject);
         }
@@ -109,12 +110,12 @@ public class Enemy : MonoBehaviour
             agent.speed = 0f;
             EnemyAttack();
         }
-    }  
+    }
 
 
     void DebugLog()
     {
-        Debug.Log( $"Enemy type {enemyName}: " + enemyDamageDeal);
+        Debug.Log($"Enemy type {enemyName}: " + enemyDamageDeal);
     }
 
     public void SwitchEnemyTarget(Transform pTarget)
@@ -163,12 +164,15 @@ public class Enemy : MonoBehaviour
             Debug.Log("There is no target");
             currentTarget = finalTarget;
         }
+
+        Vector3 movement = agent.velocity;
+        entityAnimationController.SetVelocity(new Vector2(movement.x, movement.z));
     }
 
     protected virtual void EnemyAttack()
     {
         Tower temp = currentTarget.gameObject.GetComponent<Tower>();
-        
+
         if (canAttack)
         {
             temp.TakeDamage(enemyDamageDeal);
@@ -181,6 +185,13 @@ public class Enemy : MonoBehaviour
         canAttack = false;
         yield return new WaitForSeconds(seconds);
         canAttack = true;
+    }
+
+    public IEnumerator SlowdownEffect(float seconds)
+    {
+        m_slowed = true;
+        yield return new WaitForSeconds(seconds);
+        m_slowed = false;
     }
 
     private void OnDestroy()
