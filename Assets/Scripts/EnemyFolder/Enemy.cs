@@ -33,10 +33,12 @@ public class Enemy : MonoBehaviour
 
     public BoxCollider targetBoxCollider; //should be farm or wall collider
     public SphereCollider enemySphereCollider;  
-
-    void Start()
+    
+    public void initialize(EnemyData data)
     {
-        target = GameObject.Find("TestTarget");
+        enemyData = data;
+
+        target = GameObject.Find("Core");
         currentTarget = target.transform;
         finalTarget = target.transform;
 
@@ -75,7 +77,7 @@ public class Enemy : MonoBehaviour
         Tower temp;
         if (collision.gameObject.TryGetComponent<Tower>(out temp))
         {
-            temp.TakeDamage(1);
+            temp.TakeDamage(enemyDamageDeal);
             //deal damage to tower with enemyDamageDeal variable?
         }
     }
@@ -128,9 +130,6 @@ public class Enemy : MonoBehaviour
             Debug.Log("Enemy is dead");
         }
     }
-
-
-
 
     protected virtual void EnemyMove()
     {
