@@ -22,7 +22,9 @@ public class Enemy : MonoBehaviour
     float enemyAttackTime;
     float enemyAttackRadius;
 
-    //public Rigidbody body;
+    bool canAttack;
+
+    public Rigidbody body;
     GameObject target;
     Transform currentTarget;
     Transform finalTarget;
@@ -30,13 +32,7 @@ public class Enemy : MonoBehaviour
     public CapsuleCollider capsuleCollider;
 
     public BoxCollider targetBoxCollider; //should be farm or wall collider
-    public SphereCollider enemySphereCollider;
-
-    //float timerLenght = 5.0f;
-    //float timeGoing;
-    //bool startedCountdown = false;
-
-    float timerThing = 0f;
+    public SphereCollider enemySphereCollider;  
 
     void Start()
     {
@@ -74,50 +70,20 @@ public class Enemy : MonoBehaviour
         EnemyMove();
     }
 
-    private void LateUpdate()
-    {
-        //if (startedCountdown)
-        //{
-        //    timeGoing += Time.deltaTime;
-        //    if (timeGoing > timerLenght)
-        //    {
-        //        timeGoing = 0;
-        //        startedCountdown = false;
-        //        SwitchEnemyTarget(finalTarget);
-        //        Debug.Log("Timer expired");
-        //        //agent.speed = enemySpeed;
-        //    }
-        //}
-    }
-
     private void OnCollisionStay(Collision collision)
     {
         Tower temp;
         if (collision.gameObject.TryGetComponent<Tower>(out temp))
         {
-            //deal damage to tower with enemyDamageDeal variable
+            temp.TakeDamage(1);
+            //deal damage to tower with enemyDamageDeal variable?
         }
     }
 
     void OnTriggerStay(Collider collider)
     {
-        
-        EnemyAttack();
-        timerThing += Time.deltaTime;
-        transform.LookAt(collider.transform.position);
-        agent.speed = 0f;
-        if (timerThing > 5f)
-        {
-            timerThing = 0f;
-            if (collider.gameObject.name == "AttackTarget")
-            {
-                
-            }
-            Debug.Log(collider.name);
-        }
-        GameObject thingy = collider.gameObject;
         Tower temp;
-        if (collider.gameObject.TryGetComponent<Tower>(out temp))
+        if (collider.gameObject.TryGetComponent<Tower>(out temp) && currentTarget.name == "Tower")
         {
             transform.LookAt(collider.transform.position);
             agent.speed = 0f;
@@ -148,7 +114,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void EnemyTakesDamage(int _damageAmmount)
+    public void EnemyTakeDamage(int _damageAmmount)
     {
         GameObject temp = this.gameObject;
 
@@ -162,6 +128,8 @@ public class Enemy : MonoBehaviour
             Debug.Log("Enemy is dead");
         }
     }
+
+
 
 
     protected virtual void EnemyMove()
@@ -180,18 +148,24 @@ public class Enemy : MonoBehaviour
 
         //^This will be replaced by farm house and the farm house radius
     }
+
     protected virtual void EnemyAttack()
     {
-        float timeGoing = 0f;
-        timeGoing += Time.deltaTime;
-        Debug.Log(timeGoing);
-        if (timeGoing >= enemyAttackTime)
+        Tower temp = currentTarget.gameObject.GetComponent<Tower>();
+        
+        if (canAttack)
         {
-            timeGoing = 0f;
-            //deal damage to tower with enemyDamageDeal variable
-            Debug.Log("Attacked");
+            temp.TakeDamage(enemyDamageDeal);
+            EnemyAttackCooldown(enemyAttackTime);
         }
-    }    
+    }
+
+    protected IEnumerator EnemyAttackCooldown(float seconds)
+    {
+        canAttack = false;
+        yield return new WaitForSeconds(seconds);
+        canAttack = true;
+    }
 }
 
 //2. Enemy attack - time between attacks, type of attack etc.

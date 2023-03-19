@@ -15,8 +15,8 @@ MonoBehaviour:
   name: '"Rhino bug"'
   description: Should be a RHINO
   model: {fileID: 0}
-  health: 100
-  speed: 0
-  damageDeal: 6969
-  attackTime: 0
-  radiusMultiply: 20
+  maxHealth: 22
+  speed: 2
+  damageDeal: 222
+  attackTime: 22
+  attackRadius: 2
