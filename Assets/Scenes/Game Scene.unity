@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028471, g: 0.22571456, b: 0.3069227, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028514, g: 0.22571522, b: 0.30692372, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1244,11 +1244,61 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 130123698797886115, guid: 256fd9760f775c540aefe448b63bab03,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 07c1687b658f7bf4ba29cc38103ee05c, type: 2}
+    - target: {fileID: 1769479510602471845, guid: 256fd9760f775c540aefe448b63bab03,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: c4a17674cbe88814ba5d58a7d88501f9, type: 2}
+    - target: {fileID: 2841967637266993578, guid: 256fd9760f775c540aefe448b63bab03,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 166ba9ec0e015984dafa24b1da1ce1e0, type: 2}
+    - target: {fileID: 2841967637266993578, guid: 256fd9760f775c540aefe448b63bab03,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 07c1687b658f7bf4ba29cc38103ee05c, type: 2}
+    - target: {fileID: 3283699174181752504, guid: 256fd9760f775c540aefe448b63bab03,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 07c1687b658f7bf4ba29cc38103ee05c, type: 2}
+    - target: {fileID: 4435104962488829232, guid: 256fd9760f775c540aefe448b63bab03,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 07c1687b658f7bf4ba29cc38103ee05c, type: 2}
+    - target: {fileID: 4435104962488829232, guid: 256fd9760f775c540aefe448b63bab03,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 07c1687b658f7bf4ba29cc38103ee05c, type: 2}
+    - target: {fileID: 5626836589136195997, guid: 256fd9760f775c540aefe448b63bab03,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 166ba9ec0e015984dafa24b1da1ce1e0, type: 2}
+    - target: {fileID: 5626836589136195997, guid: 256fd9760f775c540aefe448b63bab03,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 07c1687b658f7bf4ba29cc38103ee05c, type: 2}
     - target: {fileID: 5636434799863718816, guid: 256fd9760f775c540aefe448b63bab03,
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 6438435819694423878, guid: 256fd9760f775c540aefe448b63bab03,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 166ba9ec0e015984dafa24b1da1ce1e0, type: 2}
     - target: {fileID: 7331289406458136314, guid: 256fd9760f775c540aefe448b63bab03,
         type: 3}
       propertyPath: m_RootOrder
@@ -1309,6 +1359,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FarmPlaceholder
       objectReference: {fileID: 0}
+    - target: {fileID: 8248549341068375966, guid: 256fd9760f775c540aefe448b63bab03,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 07c1687b658f7bf4ba29cc38103ee05c, type: 2}
     - target: {fileID: 8259136599394422813, guid: 256fd9760f775c540aefe448b63bab03,
         type: 3}
       propertyPath: m_StaticEditorFlags
@@ -1322,6 +1377,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3566231756930949452, guid: 256fd9760f775c540aefe448b63bab03, type: 3}
+    - {fileID: 7389003508311258369, guid: 256fd9760f775c540aefe448b63bab03, type: 3}
+    - {fileID: 8550778358551948711, guid: 256fd9760f775c540aefe448b63bab03, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3528777993067549841, guid: 256fd9760f775c540aefe448b63bab03,
