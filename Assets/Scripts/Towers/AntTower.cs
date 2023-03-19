@@ -8,13 +8,15 @@ public class AntTower : Tower
     {
         var vel = m_curretTarget.GetComponent<Rigidbody>().velocity;
         var pos = m_curretTarget.transform.position + vel;
-        transform.LookAt(m_curretTarget.transform);
+        var temp = m_curretTarget.transform.position;
+        temp.y = 0;
+        transform.LookAt(temp);
 
         RaycastHit hit;
         if (Physics.Raycast(m_gunTip.position, transform.forward, out hit, Mathf.Infinity, m_targetMask))
         {
             var name = LayerMask.LayerToName(hit.transform.gameObject.layer);
-            if (!name.Equals("Target"))
+            if (!name.Equals("Enemy"))
             {
                 return;
             }
