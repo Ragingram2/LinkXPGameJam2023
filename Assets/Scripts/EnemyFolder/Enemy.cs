@@ -24,6 +24,8 @@ public class Enemy : MonoBehaviour
 
     bool canAttack;
 
+    
+
     public Rigidbody body;
     GameObject target;
     Transform currentTarget;
@@ -36,7 +38,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
-        target = GameObject.Find("TestTarget");
+        target = GameObject.Find("TestTarget");//find farm
         currentTarget = target.transform;
         finalTarget = target.transform;
 
@@ -70,6 +72,17 @@ public class Enemy : MonoBehaviour
         EnemyMove();
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        //Farm farmy;
+        //GameObject thisEnemy = this.gameObject;
+        //if (collision.gameObject.TryGetComponent<Farm>(out farmy))
+        //{
+        //    GameObject.Destroy(thisEnemy);
+        //    farmy.gameObject.takeDamage(1);
+        //}
+    }
+
     private void OnCollisionStay(Collision collision)
     {
         Tower temp;
@@ -83,13 +96,7 @@ public class Enemy : MonoBehaviour
     void OnTriggerStay(Collider collider)
     {
         Tower temp;
-        if (collider.gameObject.TryGetComponent<Tower>(out temp) && currentTarget.name == "Tower")
-        {
-            transform.LookAt(collider.transform.position);
-            agent.speed = 0f;
-            EnemyAttack();
-        }
-        else if (collider.gameObject.name == "AttackTarget")
+        if (/*collider.gameObject.TryGetComponent<Tower>(out temp && */currentTarget.tag == "Tower")
         {
             transform.LookAt(collider.transform.position);
             agent.speed = 0f;
@@ -97,10 +104,12 @@ public class Enemy : MonoBehaviour
         }
     }  
 
+
     void DebugLog()
     {
         Debug.Log( $"Enemy type {enemyName}: " + enemyDamageDeal);
     }
+
 
     //If attacked by tower, it targets it, and when it gets within range, it attacks
     public void SwitchEnemyTarget(Transform pTarget)
@@ -114,13 +123,15 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void EnemyTakeDamage(int _damageAmmount)
+    public void EnemyTakeDamage(int _damageAmmount, GameObject bulletOwner)
     {
         GameObject temp = this.gameObject;
 
-        SwitchEnemyTarget(currentTarget);
+        SwitchEnemyTarget(bulletOwner.transform);
 
         enemyCurrentHealth -= _damageAmmount;
+        Debug.Log(enemyCurrentHealth);
+        //When you get the tower reference from the bullet, if enemy dead, m_targets goodbye
 
         if (enemyCurrentHealth <= 0)
         {
@@ -128,7 +139,6 @@ public class Enemy : MonoBehaviour
             Debug.Log("Enemy is dead");
         }
     }
-
 
 
 
@@ -145,8 +155,6 @@ public class Enemy : MonoBehaviour
             Debug.Log("There is no target");
             currentTarget = finalTarget;
         }
-
-        //^This will be replaced by farm house and the farm house radius
     }
 
     protected virtual void EnemyAttack()
@@ -156,7 +164,7 @@ public class Enemy : MonoBehaviour
         if (canAttack)
         {
             temp.TakeDamage(enemyDamageDeal);
-            EnemyAttackCooldown(enemyAttackTime);
+            StartCoroutine(EnemyAttackCooldown(enemyAttackTime));
         }
     }
 
