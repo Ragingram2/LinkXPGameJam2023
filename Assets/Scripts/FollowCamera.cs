@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-[ExecuteAlways]
 public class FollowCamera : MonoBehaviour
 {
     void OnEnable()
