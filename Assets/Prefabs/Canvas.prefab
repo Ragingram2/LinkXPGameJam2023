@@ -52,9 +52,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wave: 0
-  blob: 0
   waveText: {fileID: 5453406343818846314}
-  blobText: {fileID: 0}
+  blobText: {fileID: 6616483985835190234}
 --- !u!1 &381694372448222826
 GameObject:
   m_ObjectHideFlags: 0
@@ -682,7 +681,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 40
+  m_text: 20
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 88ce032a335230f4ab39b71d37fbd0d9, type: 2}
   m_sharedMaterial: {fileID: 3398478203192665371, guid: 88ce032a335230f4ab39b71d37fbd0d9,
@@ -900,7 +899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0e415a717519f341b01c489b1664bf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cost: 40
+  cost: 20
   buttonText: {fileID: 6616483985835190234}
 --- !u!1 &4722904004875369191
 GameObject:
@@ -1222,7 +1221,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wave: 0
-  blob: 0
   waveText: {fileID: 5453406343818846314}
   blobText: {fileID: 2486867807669572229}
 --- !u!1 &5797902441993575940
