@@ -11,7 +11,6 @@ public class Builder : MonoBehaviour
     [SerializeField] private GameObject m_highlighter;
     [SerializeField] private float m_cellsize = 10;
     [HideInInspector] private PlayerController m_player;
-    private Dictionary<Vector3, GameObject> m_activeTowers = new Dictionary<Vector3, GameObject>();
 
     void Start()
     {
@@ -27,22 +26,10 @@ public class Builder : MonoBehaviour
     public GameObject BuildOnGrid(Vector3 pos)
     {
         var g_pos = GetGridPos(pos);
-        if (!m_activeTowers.ContainsKey(g_pos))
+        if (PlacementGrid.instance.GetObject(pos) == null)
         {
             var go = Instantiate(m_towerPrefab, g_pos, Quaternion.identity);
-            m_activeTowers.Add(g_pos, go);
-            return go;
-        }
-        return null;
-    }
-
-    public GameObject BuildOnGrid(Vector3 pos, Vector3 direction)
-    {
-        var g_pos = GetGridPos(pos + (direction * m_cellsize));
-        if (!m_activeTowers.ContainsKey(g_pos))
-        {
-            var go = Instantiate(m_towerPrefab, g_pos, Quaternion.identity);
-            m_activeTowers.Add(g_pos, go);
+            PlacementGrid.instance.FillItem(g_pos, go);
             return go;
         }
         return null;
@@ -56,26 +43,17 @@ public class Builder : MonoBehaviour
 
     public GameObject GetTower(Vector2 key)
     {
-        if (m_activeTowers.ContainsKey(key))
-        {
-            return m_activeTowers[key];
-        }
-        return null;
+        return PlacementGrid.instance.GetObject(key);
     }
 
     public void RemoveTower(Vector2 key)
     {
-        if (m_activeTowers.ContainsKey(key))
-        {
-            m_activeTowers.Remove(key);
-        }
+        PlacementGrid.instance.FillItem(key, null);
     }
 
     public Vector3 GetGridPos(Vector3 pos)
     {
-        float x = Mathf.Round(pos.x / m_cellsize) * m_cellsize;
-        float y = Mathf.Round(pos.z / m_cellsize) * m_cellsize;
-        return new Vector3(x, 0, y);
+        return PlacementGrid.instance.GetCenter(pos);
     }
 
     private void OnDrawGizmos()
@@ -90,12 +68,12 @@ public class Builder : MonoBehaviour
                 Gizmos.DrawWireCube(pos, Vector3.one * m_cellsize);
             }
 
-            Gizmos.color = Color.red;
-            foreach (var pos in m_activeTowers.Keys)
-            {
-                Handles.Label(pos, $"{pos}");
-                Gizmos.DrawWireCube(pos, Vector3.one * m_cellsize);
-            }
+            //Gizmos.color = Color.red;
+            //foreach (var pos in m_activeTowers.Keys)
+            //{
+            //    Handles.Label(pos, $"{pos}");
+            //    Gizmos.DrawWireCube(pos, Vector3.one * m_cellsize);
+            //}
 
             Gizmos.color = Color.green;
             for (int x = -5; x < 5; x++)

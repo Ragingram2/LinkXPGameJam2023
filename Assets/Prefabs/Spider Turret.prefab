@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 4006675608560239174}
   - component: {fileID: 4609309690506062928}
   - component: {fileID: 2543578172828563649}
-  - component: {fileID: 8626063471329328225}
+  - component: {fileID: 8652097519752265725}
   m_Layer: 2
   m_Name: Spider Turret
   m_TagString: Untagged
@@ -216,7 +216,7 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8626063471329328225
+--- !u!114 &8652097519752265725
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -225,14 +225,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 4226136409204672637}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 176b4926cd414a14ead89cf9e9e463ed, type: 3}
+  m_Script: {fileID: 11500000, guid: af183c7112cdd6247b4c99d55662872d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_data: {fileID: 11400000, guid: f3c36d9756f99414b9b27684d6d6a2ff, type: 2}
+  m_data: {fileID: 11400000, guid: 1e5d94b0c44934d4498f323cd397a16b, type: 2}
   m_targetMask:
     serializedVersion: 2
     m_Bits: 128
-  m_bullet: {fileID: 5895735362341990548, guid: 29943438627ab3f4183af5f99e06bcd5,
+  m_bullet: {fileID: 5839374838096806620, guid: 5a7ea9e13b4476648b88a0d251ef211a,
     type: 3}
   m_gunTip: {fileID: 2147683590413805959}
   m_targets: []

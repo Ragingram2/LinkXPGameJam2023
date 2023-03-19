@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
     {
         if (val.IsPressed())
         {
-            m_builder.BuildOnGrid(transform.position, m_direction);
+            m_builder.BuildOnGrid(transform.position + m_direction * PlacementGrid.instance.itemWidth);
         }
     }
 
