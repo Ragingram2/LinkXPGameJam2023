@@ -118,7 +118,7 @@ public class Enemy : MonoBehaviour
     {
         GameObject temp = this.gameObject;
 
-        SwitchEnemyTarget(currentTarget); //takes the turret the damage came from
+        SwitchEnemyTarget(currentTarget);
 
         enemyCurrentHealth -= _damageAmmount;
 
